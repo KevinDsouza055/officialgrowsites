@@ -43,7 +43,7 @@ input,textarea{font:inherit;border:none;outline:none;background:none}
 .container{max-width:1200px;margin:0 auto;padding:0 48px}
 section{padding:120px 0}
 .section-label{font-size:11px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--grey-mid);margin-bottom:20px}
-.section-title{font-family:var(--font-serif);font-size:clamp(36px,5vw,62px);font-weight:400;line-height:1.1;color:var(--charcoal);margin-bottom:56px}
+.section-title{font-family:var(--font-serif);font-size:clamp(36px,5vw,62px);font-weight:400;line-height:1.1;color:var(--charcoal);margin-bottom:56px;text-align:center}
 .section-title em{font-style:italic;font-weight:300;color:var(--grey-dark)}
 .btn{display:inline-flex;align-items:center;gap:10px;padding:16px 36px;border-radius:100px;font-size:14px;font-weight:500;letter-spacing:.02em;transition:all .5s var(--ease-out);cursor:none}
 .btn-primary{background:var(--charcoal);color:var(--white);box-shadow:var(--shadow-md)}
@@ -231,7 +231,10 @@ section{padding:120px 0}
 <script>
 // Supabase configuration
 const SUPABASE_URL = 'https://zqnkbipacomxvrfdhjke.supabase.co';
-        const SUPABASE_ANON_KEY = 'sb_publishable_KNKI1EGL2pE7tUsbWnDMFg_GM3NCFhH';
+const SUPABASE_ANON_KEY = 'sb_publishable_KNKI1EGL2pE7tUsbWnDMFg_GM3NCFhH';
+
+// Initialize Supabase client
+const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 // ─── SCROLL REVEALS ───────────────────────────────
 const revEls = document.querySelectorAll('.rv');
@@ -336,7 +339,7 @@ document.getElementById('cForm').addEventListener('submit', async e => {
 
   try {
     // Send data to Supabase
-    const { data, error } = await supabase
+    const { data, error } = await supabaseClient
       .from('leads')
       .insert([
         {

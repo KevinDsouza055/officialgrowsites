@@ -43,7 +43,7 @@ input,textarea{font:inherit;border:none;outline:none;background:none}
 .container{max-width:1200px;margin:0 auto;padding:0 48px}
 section{padding:120px 0}
 .section-label{font-size:11px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--grey-mid);margin-bottom:20px}
-.section-title{font-family:var(--font-serif);font-size:clamp(36px,5vw,62px);font-weight:400;line-height:1.1;color:var(--charcoal);margin-bottom:56px}
+.section-title{font-family:var(--font-serif);font-size:clamp(36px,5vw,62px);font-weight:400;line-height:1.1;color:var(--charcoal);margin-bottom:56px;text-align:center}
 .section-title em{font-style:italic;font-weight:300;color:var(--grey-dark)}
 .btn{display:inline-flex;align-items:center;gap:10px;padding:16px 36px;border-radius:100px;font-size:14px;font-weight:500;letter-spacing:.02em;transition:all .5s var(--ease-out);cursor:none}
 .btn-primary{background:var(--charcoal);color:var(--white);box-shadow:var(--shadow-md)}
@@ -69,7 +69,9 @@ section{padding:120px 0}
 .navbar{position:fixed;top:0;left:0;right:0;z-index:800;padding:24px 0;transition:all .5s var(--ease-out)}
 .navbar.scrolled{padding:14px 0;background:rgba(250,250,248,.92);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);box-shadow:0 1px 0 rgba(42,39,36,.06)}
 .nav-container{max-width:1200px;margin:0 auto;padding:0 48px;display:flex;align-items:center;justify-content:space-between}
-.nav-logo{font-family:var(--font-serif);font-size:22px;font-weight:600;color:var(--charcoal)}
+.nav-logo{display:inline-flex;align-items:center;gap:12px;font-family:var(--font-serif);font-size:22px;font-weight:600;color:var(--charcoal)}
+.brand-logo-img{width:42px;height:42px;object-fit:contain;border-radius:12px;background:rgba(255,255,255,.72);padding:6px;border:1px solid rgba(42,39,36,.08);box-shadow:var(--shadow-sm)}
+.brand-text{display:inline-flex;align-items:center}
 .logo-dot{color:var(--accent-blue)}
 .nav-links{display:flex;align-items:center;gap:40px}
 .nav-link{font-size:13px;color:var(--grey-dark);position:relative;transition:color .25s ease;cursor:none}
@@ -90,14 +92,14 @@ section{padding:120px 0}
 .mobile-link{display:block;font-family:var(--font-serif);font-size:36px;font-weight:400;color:var(--charcoal);padding:14px 0;transition:color .25s ease}
 .mobile-link:hover{color:var(--grey-mid)}
 @media(max-width:900px){.nav-links{display:none}.hamburger{display:flex}}
-@media(max-width:768px){.nav-container{padding:0 24px}}
+@media(max-width:768px){.nav-container{padding:0 24px}.nav-logo{gap:10px;font-size:20px}.brand-logo-img{width:38px;height:38px;padding:5px}}
 
 /* ─── PORTFOLIO ───────────────────────────────── */
 .portfolio{background:var(--white);padding-bottom:0}
 .port-grid{display:flex;flex-direction:column;gap:80px;padding:0 48px 100px;max-width:1200px;margin:0 auto}
-.port-item{display:flex;align-items:center;gap:60px}
+.port-item{display:block;background:var(--off-white);border:1px solid var(--cream);border-radius:var(--r-lg);padding:28px;box-shadow:var(--shadow-sm)}
 .port-item:nth-child(even){flex-direction:row-reverse}
-.port-device{flex:1.2}
+.port-device{display:none}
 .laptop-w{display:flex;flex-direction:column;align-items:center}
 .laptop-scr{width:100%;background:var(--charcoal);border-radius:12px 12px 0 0;padding:10px 10px 0;box-shadow:var(--shadow-lg);border:3px solid var(--charcoal);border-bottom:none;aspect-ratio:16/10;overflow:hidden;position:relative}
 .laptop-base-w{width:100%;height:13px;background:linear-gradient(to bottom,#3A3733,#2A2724);border-radius:0 0 4px 4px;box-shadow:0 4px 12px rgba(0,0,0,.2)}
@@ -133,18 +135,20 @@ section{padding:120px 0}
 .pv-stats{display:flex;border-top:1px solid rgba(255,255,255,.06)}
 .pv-stat{flex:1;height:32px;background:rgba(255,255,255,.04);border-right:1px solid rgba(255,255,255,.04)}
 .pv-stat:last-child{border:none}
-.port-info{flex:1}
+.port-info{max-width:420px}
 .port-tag-l{display:inline-block;font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--grey-mid);background:var(--off-white);border:1px solid var(--cream);padding:6px 14px;border-radius:100px;margin-bottom:20px}
 .port-info h4{font-family:var(--font-serif);font-size:32px;font-weight:400;color:var(--charcoal);margin-bottom:12px;line-height:1.2}
 .port-info p{font-size:14px;line-height:1.75;color:var(--grey-dark)}
-@media(max-width:900px){.port-grid{padding:0 24px 80px;gap:60px}.port-item,.port-item:nth-child(even){flex-direction:column;gap:32px}}
+@media(max-width:900px){.port-grid{padding:0 24px 80px;gap:28px}}
 
 /* ─── PROJECTS DEVELOPED ───────────────────────── */
 .projects-developed{background:var(--off-white)}
 .projects-grid{display:grid;grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));gap:40px}
 .project-card{background:var(--white);border:1px solid var(--cream);border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--shadow-sm);transition:all .5s var(--ease-out)}
 .project-card:hover{box-shadow:var(--shadow-md);transform:translateY(-4px)}
-.project-img{height:200px;background:var(--grey-light);display:flex;align-items:center;justify-content:center;color:var(--grey-mid);font-size:14px}
+.project-img{height:220px;background:var(--grey-light);display:flex;align-items:center;justify-content:center;color:var(--grey-mid);font-size:14px;overflow:hidden}
+.project-img img{width:100%;height:100%;object-fit:cover;transition:transform .5s var(--ease-out)}
+.project-card:hover .project-img img{transform:scale(1.03)}
 .project-info{padding:24px}
 .project-info h4{font-family:var(--font-serif);font-size:24px;font-weight:500;color:var(--charcoal);margin-bottom:8px}
 .project-info p{font-size:14px;line-height:1.6;color:var(--grey-dark);margin-bottom:16px}
@@ -186,7 +190,10 @@ section{padding:120px 0}
 <!-- ═══ NAVBAR ═══ -->
 <nav class="navbar" id="navbar">
   <div class="nav-container">
-    <a href="index.html" class="nav-logo">Grow Sites<span class="logo-dot">.</span></a>
+    <a href="index.html" class="nav-logo">
+      <img src="images/logo.png" alt="GrowSites logo" class="brand-logo-img" onerror="this.style.display='none'" />
+      <span class="brand-text">GrowSites<span class="logo-dot">.</span></span>
+    </a>
     <ul class="nav-links">
       <li><a href="index.html#services" class="nav-link">Services</a></li>
       <li><a href="index.html#why" class="nav-link">Why Us</a></li>
@@ -212,68 +219,30 @@ section{padding:120px 0}
 </div>
 
 <!-- ═══ PORTFOLIO ═══ -->
-<section class="portfolio" id="portfolio">
-  <div class="container">
-    <div class="section-label rv">Our Work</div>
-    <h2 class="section-title rv">Projects We've<br/><em>Developed.</em></h2>
-  </div>
-  <div class="port-grid">
 
-    <!-- Item 1 -->
-    <div class="port-item rv">
-      <div class="port-device laptop-w">
-        <div class="laptop-scr">
-          <div class="pv pv1">
-            <div class="pv-nav"><div class="pv-logo"></div><div class="pv-lnks"><s></s><s></s><s></s></div></div>
-            <div class="pv-hero"><div class="pv-img"></div><div class="pv-txt"><div class="pv-t"></div><div class="pv-s"></div><div class="pv-b"></div></div></div>
-            <div class="pv-cards"><div class="pv-card pvc1"></div><div class="pv-card pvc2"></div><div class="pv-card"></div></div>
-          </div>
-        </div>
-        <div class="laptop-base-w"></div><div class="laptop-foot-w"></div>
-      </div>
-      <div class="port-info"><span class="port-tag-l">Website · E-Commerce</span><h4>Lumière Boutique</h4><p>A luxury fashion brand with a conversion-optimised store experience that tripled their online sales.</p></div>
-    </div>
-
-    <!-- Item 3 -->
-    <div class="port-item rv">
-      <div class="port-device laptop-w laptop-dark">
-        <div class="laptop-scr">
-          <div class="pv pv3">
-            <div class="pv-nav dk"><div class="pv-logo dk"></div><div class="pv-lnks dk"><s></s><s></s><s></s></div></div>
-            <div class="pv-hero"><div class="pv-txt"><div class="pv-t dk"></div><div class="pv-s dk"></div><div class="pv-b dk"></div></div><div class="pv-img dk" style="width:36%;height:76px"></div></div>
-            <div class="pv-stats"><div class="pv-stat"></div><div class="pv-stat"></div><div class="pv-stat"></div></div>
-          </div>
-        </div>
-        <div class="laptop-base-w"></div><div class="laptop-foot-w"></div>
-      </div>
-      <div class="port-info"><span class="port-tag-l">Website · Portfolio</span><h4>Nova Creative Studio</h4><p>A stunning portfolio site that landed them 3× more client inquiries within 60 days.</p></div>
-    </div>
-
-  </div>
-</section>
 
 <!-- ═══ PROJECTS DEVELOPED ═══ -->
 <section class="projects-developed">
   <div class="container">
-    <div class="section-label rv">Projects Developed</div>
-    <h2 class="section-title rv">Screenshots &amp; Links<br/><em>of Our Work.</em></h2>
+    <div class="section-label rv">Project Gallery</div>
+    <h2 class="section-title rv">Screenshots of<br/><em>your current work.</em></h2>
     <div class="projects-grid">
       <!-- Example Project 1 -->
       <div class="project-card rv">
-        <div class="project-img">Screenshot Placeholder</div>
+        <div class="project-img"><img src="images/project1.jpg" alt="Sea Food Restaurant project screenshot" /></div>
         <div class="project-info">
-          <h4>Project 1</h4>
-          <p>Description of the project.</p>
-          <a href="#" class="project-link">View Project</a>
+          <h4>Sea Food Restaurant</h4>
+          <p>A clean restaurant site focused on menu visibility, atmosphere, and helping visitors turn into real customers.</p>
+          <a href="#" class="project-link">Live link coming soon</a>
         </div>
       </div>
       <!-- Example Project 2 -->
       <div class="project-card rv" data-d="1">
-        <div class="project-img">Screenshot Placeholder</div>
+        <div class="project-img"><img src="images/project2.jpg" alt="Cake Shop project screenshot" style="object-fit:contain;background:#f7f4ee;" /></div>
         <div class="project-info">
-          <h4>Project 2</h4>
-          <p>Description of the project.</p>
-          <!-- No link for this one -->
+          <h4>Cake Shop</h4>
+          <p>An engaging bakery concept that combines product discovery, customer accounts, and a custom cake builder in one smooth flow.</p>
+          <a href="#" class="project-link">Live link coming soon</a>
         </div>
       </div>
       <!-- Add more as needed -->
@@ -286,7 +255,7 @@ section{padding:120px 0}
   <div class="container">
     <div class="footer-top">
       <div class="footer-brand">
-        <span class="footer-logo-t">Grow Sites<span class="logo-dot">.</span></span>
+        <span class="footer-logo-t">GrowSites<span class="logo-dot">.</span></span>
         <p>Premium Website Creation for brands that mean business.</p>
       </div>
       <div class="footer-col"><h5>Services</h5><a href="index.html#services">Website Creation</a></div>

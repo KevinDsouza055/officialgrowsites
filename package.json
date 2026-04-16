@@ -29,9 +29,10 @@
     "url": "https://github.com/KevinDsouza055/officialgrowsites/issues"
   },
   "homepage": "https://github.com/KevinDsouza055/officialgrowsites#readme",
-  "dependencies": {},
-  "devDependencies": {},
+  "dependencies": {
+    "@supabase/supabase-js": "^2.103.2"
+  },
   "engines": {
-    "node": ">=14.0.0"
+    "node": "18.x"
   }
 }

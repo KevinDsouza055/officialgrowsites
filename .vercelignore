@@ -1,0 +1,11 @@
+node_modules
+.git
+npm-debug.log*
+ADMIN_SETUP_README.md
+SUPABASE_URL_GUIDE.md
+setup-admin.sh
+quick-test.js
+test-setup.js
+update-keys.js
+config.example.json
+
