@@ -219,50 +219,6 @@ section{padding:120px 0}
 .oc-icon{width:44px;height:44px;background:linear-gradient(135deg,var(--cream),var(--beige));border-radius:var(--r-sm);display:flex;align-items:center;justify-content:center;color:var(--charcoal);margin-bottom:20px}
 .outcome-card h4{font-family:var(--font-serif);font-size:22px;font-weight:500;color:var(--charcoal);margin-bottom:10px}
 .outcome-card p{font-size:13.5px;line-height:1.75;color:var(--grey-dark)}
-/* BA Slider */
-.ba-wrap{text-align:center}
-.ba-label-s{font-size:11px;font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:var(--grey-mid);margin-bottom:24px}
-.ba-container{position:relative;width:100%;max-width:780px;height:330px;margin:0 auto 16px;border-radius:var(--r-xl);overflow:hidden;box-shadow:var(--shadow-lg);cursor:ew-resize;user-select:none}
-.ba-after-p,.ba-before-p{position:absolute;inset:0}
-.ba-before-p{clip-path:inset(0 50% 0 0);z-index:2}
-.ba-scr{position:absolute;inset:0;padding:18px;display:flex;flex-direction:column;gap:10px}
-.after-scr{background:linear-gradient(135deg,var(--white),var(--off-white))}
-.before-scr{background:#EEECEA}
-/* After mock */
-.amn{display:flex;align-items:center;gap:10px;padding:9px 14px;background:var(--white);border-radius:6px;border:1px solid var(--cream)}
-.aml{width:56px;height:9px;background:var(--charcoal);border-radius:4px}
-.amli{display:flex;gap:8px;margin-left:auto}
-.amli div{width:24px;height:7px;background:var(--grey-light);border-radius:3px}
-.amcta{width:52px;height:20px;background:var(--charcoal);border-radius:10px}
-.amh{flex:1;display:flex;gap:14px;padding:16px;background:linear-gradient(135deg,var(--off-white),var(--cream));border-radius:10px;align-items:center}
-.amht{flex:1}
-.amh1{width:90%;height:12px;background:var(--charcoal);border-radius:6px;margin-bottom:7px}
-.amh2{width:70%;height:8px;background:var(--charcoal);border-radius:4px;margin-bottom:7px}
-.amh3{width:50%;height:7px;background:var(--grey-light);border-radius:3px;margin-bottom:14px}
-.amhi{width:130px;height:80px;background:linear-gradient(135deg,var(--accent-blue),var(--accent-lav));border-radius:8px;flex-shrink:0}
-.amcards{display:flex;gap:8px}
-.amcard{flex:1;height:44px;background:var(--white);border-radius:8px;border:1px solid var(--cream)}
-/* Before mock */
-.bmon{display:flex;align-items:center;gap:10px;padding:7px 14px;background:#E0DDDA;border-bottom:2px solid #C8C4C0}
-.bmol{width:76px;height:10px;background:#888;border-radius:2px}
-.bmoli{display:flex;gap:7px;margin-left:auto}
-.bmoli div{width:28px;height:7px;background:#AAA;border-radius:2px}
-.bmoh{flex:1;display:flex;gap:0}
-.bmohi{width:45%;background:#D4CFC8}
-.bmoht{flex:1;padding:14px;background:#ECEAE6;display:flex;flex-direction:column;justify-content:center;gap:7px}
-.bmoh1{width:88%;height:9px;background:#999;border-radius:2px}
-.bmoh2{width:66%;height:7px;background:#BBB;border-radius:2px}
-.bmocards{display:flex;border-top:2px solid #D4D0CC}
-.bmocard{flex:1;height:42px;background:#E8E4E0;border-right:2px solid #D4D0CC}
-.bmocard:last-child{border-right:none}
-.ba-tag-l{position:absolute;bottom:12px;font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;padding:4px 12px;border-radius:100px;z-index:10}
-.at{right:12px;background:rgba(42,39,36,.82);color:var(--white)}
-.bt{left:12px;background:rgba(255,255,255,.88);color:var(--grey-dark)}
-.ba-handle-l{position:absolute;top:0;bottom:0;left:50%;width:3px;background:var(--white);z-index:10;transform:translateX(-50%);box-shadow:0 0 12px rgba(0,0,0,.12)}
-.ba-handle-knob{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:40px;height:40px;background:var(--white);border:2px solid var(--cream);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--charcoal);box-shadow:var(--shadow-md);cursor:ew-resize;font-size:13px}
-.ba-caption{font-size:12px;color:var(--grey-mid);margin-top:14px}
-@media(max-width:900px){.outcomes-grid{grid-template-columns:1fr}.counters-row{flex-wrap:wrap;padding:36px 20px;gap:28px}.c-divider{display:none}.counter-item{min-width:45%}.ba-container{height:240px}}
-
 /* ─── PROCESS ─────────────────────────────────── */
 .process{background:var(--charcoal);position:relative;overflow:hidden}
 .process::before{content:'';position:absolute;top:-180px;left:-180px;width:600px;height:600px;background:radial-gradient(circle,rgba(184,204,224,.07),transparent 70%);pointer-events:none}
@@ -517,33 +473,6 @@ section{padding:120px 0}
       </div>
     </div>
 
-    <!-- Before / After -->
-    <div class="ba-wrap rv">
-      <div class="ba-label-s">Before &amp; After</div>
-      <div class="ba-container" id="baBox">
-        <!-- After -->
-        <div class="ba-after-p">
-          <div class="ba-scr after-scr">
-            <div class="amn"><div class="aml"></div><div class="amli"><div></div><div></div></div><div class="amcta"></div></div>
-            <div class="amh"><div class="amht"><div class="amh1"></div><div class="amh2"></div><div class="amh3"></div></div><div class="amhi"></div></div>
-            <div class="amcards"><div class="amcard"></div><div class="amcard"></div><div class="amcard"></div></div>
-          </div>
-          <div class="ba-tag-l at">After — Grow Sites</div>
-        </div>
-        <!-- Before -->
-        <div class="ba-before-p" id="baBefore">
-          <div class="ba-scr before-scr">
-            <div class="bmon"><div class="bmol"></div><div class="bmoli"><div></div><div></div><div></div></div></div>
-            <div class="bmoh"><div class="bmohi"></div><div class="bmoht"><div class="bmoh1"></div><div class="bmoh2"></div></div></div>
-            <div class="bmocards"><div class="bmocard"></div><div class="bmocard"></div></div>
-          </div>
-          <div class="ba-tag-l bt">Before</div>
-        </div>
-        <!-- Handle -->
-        <div class="ba-handle-l" id="baHandle"><div class="ba-handle-knob">⇔</div></div>
-      </div>
-      <p class="ba-caption">Drag to compare — real transformation, real results.</p>
-    </div>
   </div>
 </section>
 
@@ -729,27 +658,6 @@ if(window.matchMedia('(min-width:769px)').matches) {
   });
   document.addEventListener('mousedown', () => { cur.style.transform='translate(-50%,-50%) scale(.7)'; });
   document.addEventListener('mouseup',   () => { cur.style.transform='translate(-50%,-50%) scale(1)'; });
-}
-
-// ─── BEFORE/AFTER SLIDER ──────────────────────────
-const baBox    = document.getElementById('baBox');
-const baBefore = document.getElementById('baBefore');
-const baHandle = document.getElementById('baHandle');
-if(baBox) {
-  let drag=false;
-  const set = pct => {
-    pct = Math.min(95, Math.max(5, pct));
-    baBefore.style.clipPath = `inset(0 ${100-pct}% 0 0)`;
-    baHandle.style.left = pct+'%';
-  };
-  set(50);
-  const getPct = x => { const r=baBox.getBoundingClientRect(); return ((x-r.left)/r.width)*100; };
-  baBox.addEventListener('mousedown', e => { drag=true; set(getPct(e.clientX)); });
-  window.addEventListener('mousemove', e => { if(drag) set(getPct(e.clientX)); });
-  window.addEventListener('mouseup', () => drag=false);
-  baBox.addEventListener('touchstart', e => { drag=true; set(getPct(e.touches[0].clientX)); }, {passive:true});
-  window.addEventListener('touchmove', e => { if(drag) set(getPct(e.touches[0].clientX)); }, {passive:true});
-  window.addEventListener('touchend', () => drag=false);
 }
 
 // ─── TIMELINE ─────────────────────────────────────
