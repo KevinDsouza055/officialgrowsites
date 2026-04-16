@@ -110,8 +110,8 @@ section{padding:120px 0}
 .f-submit{width:100%;justify-content:center;padding:18px 36px;font-size:14px;border-radius:var(--r-lg);cursor:pointer;margin-top:6px}
 .f-success{display:none;align-items:center;gap:12px;margin-top:18px;padding:14px 18px;background:rgba(189,212,196,.25);border:1px solid rgba(189,212,196,.5);border-radius:var(--r-md);font-size:13px;color:var(--charcoal)}
 .f-success.show{display:flex;animation:fadeInUp .5s var(--ease-out)}
-@keyframes fadeInUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
-.f-success svg{color:var(--accent-sage);flex-shrink:0}
+  .f-error{display:none;margin-top:14px;padding:14px 18px;background:rgba(254,228,206,.9);border:1px solid rgba(251,191,36,.5);border-radius:var(--r-md);font-size:13px;color:#92400e;}
+  .f-error.show{display:block;}
 @media(max-width:900px){.contact-split{grid-template-columns:1fr;gap:48px}.cform{padding:36px 28px}}
 
 /* ─── FOOTER ──────────────────────────────────── */
@@ -191,7 +191,7 @@ section{padding:120px 0}
         </div>
       </div>
       <div>
-        <form class="cform" id="cForm" novalidate>
+        <form class="cform" id="cForm">
           <div class="fg"><label>Your Name</label><input type="text" name="name" placeholder="e.g. Priya Mehta" required /></div>
           <div class="fg"><label>Business Name</label><input type="text" name="business" placeholder="e.g. Lumière Boutique" required /></div>
           <div class="fg"><label>WhatsApp Number</label><input type="tel" name="whatsapp" placeholder="e.g. +91 98765 43210" required /></div>
@@ -200,6 +200,7 @@ section{padding:120px 0}
             <span id="fBtnText">Let's Grow Your Business</span>
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </button>
+          <div class="f-error" id="fError"></div>
           <div class="f-success" id="fSuccess">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
             <span>Message sent! We'll be in touch within 24 hours.</span>
@@ -296,12 +297,38 @@ if(window.matchMedia('(min-width:769px)').matches) {
 }
 
 // ─── FORM ─────────────────────────────────────────
+function showFormError(message) {
+  const errorEl = document.getElementById('fError');
+  if (!errorEl) return;
+  errorEl.textContent = message;
+  errorEl.classList.add('show');
+}
+
+function clearFormError() {
+  const errorEl = document.getElementById('fError');
+  if (!errorEl) return;
+  errorEl.classList.remove('show');
+  errorEl.textContent = '';
+}
+
 document.getElementById('cForm').addEventListener('submit', async e => {
   e.preventDefault();
-  const inputs = e.target.querySelectorAll('input,textarea');
+  clearFormError();
+
+  const inputs = Array.from(e.target.querySelectorAll('input,textarea'));
   let ok = true;
-  inputs.forEach(i => { if(!i.value.trim()){ ok=false; i.style.borderColor='var(--accent-rose)'; setTimeout(()=>i.style.borderColor='',2000); } });
-  if(!ok) return;
+  inputs.forEach(i => {
+    if (!i.value.trim()) {
+      ok = false;
+      i.style.borderColor = 'var(--accent-rose)';
+      setTimeout(() => i.style.borderColor = '', 2000);
+    }
+  });
+
+  if (!ok) {
+    showFormError('Please complete all fields before submitting.');
+    return;
+  }
 
   const btn = document.getElementById('fBtnText');
   const originalText = btn.textContent;
@@ -325,11 +352,13 @@ document.getElementById('cForm').addEventListener('submit', async e => {
 
     e.target.reset();
     btn.textContent = "Let's Grow Your Business";
+    clearFormError();
     const s = document.getElementById('fSuccess');
     s.classList.add('show');
     setTimeout(() => s.classList.remove('show'), 5000);
   } catch (error) {
     console.error('Error submitting form:', error);
+    showFormError(error?.message ? `Submission failed: ${error.message}` : 'Submission failed. Please try again.');
     btn.textContent = 'Error - Try Again';
     setTimeout(() => btn.textContent = originalText, 3000);
   }
