@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="Grow Sites — Contact Us" />
+<title>Grow Sites — Contact Us</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<style>
+/* ─── RESET ─────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+body{overflow-x:hidden;font-family:'DM Sans',system-ui,sans-serif;background:#FAFAF8;color:#2A2724;line-height:1.6;cursor:none}
+img,video{max-width:100%;display:block}
+a{text-decoration:none;color:inherit}
+ul{list-style:none}
+button{border:none;background:none;cursor:pointer;font:inherit}
+input,textarea{font:inherit;border:none;outline:none;background:none}
+@media(max-width:768px){body{cursor:auto}}
+
+/* ─── VARIABLES ───────────────────────────────── */
+:root{
+  --white:#FAFAF8;--off-white:#F5F3EE;--cream:#EDE9E1;--beige:#E4DED3;
+  --grey-light:#D6D0C8;--grey-mid:#A8A29A;--grey-dark:#6B6560;
+  --charcoal:#2A2724;--black:#1A1816;
+  --accent-blue:#B8CCE0;--accent-lav:#C9C2D8;--accent-sage:#BDD4C4;--accent-rose:#DDBFBF;
+  --font-serif:'Cormorant Garamond',Georgia,serif;
+  --font-sans:'DM Sans',system-ui,sans-serif;
+  --ease-out:cubic-bezier(0.16,1,0.3,1);
+  --ease-io:cubic-bezier(0.4,0,0.2,1);
+  --shadow-sm:0 2px 12px rgba(42,39,36,.06);
+  --shadow-md:0 8px 32px rgba(42,39,36,.10);
+  --shadow-lg:0 20px 60px rgba(42,39,36,.14);
+  --shadow-hover:0 24px 64px rgba(42,39,36,.18);
+  --r-sm:8px;--r-md:16px;--r-lg:24px;--r-xl:40px;
+}
+
+/* ─── BASE ────────────────────────────────────── */
+.container{max-width:1200px;margin:0 auto;padding:0 48px}
+section{padding:120px 0}
+.section-label{font-size:11px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--grey-mid);margin-bottom:20px}
+.section-title{font-family:var(--font-serif);font-size:clamp(36px,5vw,62px);font-weight:400;line-height:1.1;color:var(--charcoal);margin-bottom:56px}
+.section-title em{font-style:italic;font-weight:300;color:var(--grey-dark)}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:16px 36px;border-radius:100px;font-size:14px;font-weight:500;letter-spacing:.02em;transition:all .5s var(--ease-out);cursor:none}
+.btn-primary{background:var(--charcoal);color:var(--white);box-shadow:var(--shadow-md)}
+.btn-primary:hover{background:var(--black);transform:translateY(-2px);box-shadow:var(--shadow-hover)}
+.btn-ghost{background:transparent;color:var(--charcoal);border:1.5px solid var(--grey-light)}
+.btn-ghost:hover{border-color:var(--charcoal);transform:translateY(-2px)}
+@media(max-width:768px){.container{padding:0 24px}.btn{cursor:pointer}}
+
+/* ─── CURSOR ──────────────────────────────────── */
+.cursor{position:fixed;width:8px;height:8px;border-radius:50%;background:var(--charcoal);pointer-events:none;z-index:9999;transform:translate(-50%,-50%);mix-blend-mode:multiply;transition:width .2s,height .2s}
+.cursor-follower{position:fixed;width:36px;height:36px;border-radius:50%;border:1.5px solid rgba(42,39,36,.25);pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .18s var(--ease-out),height .18s var(--ease-out),border-color .18s}
+.cursor.hovered{width:14px;height:14px}
+.cursor-follower.hovered{width:52px;height:52px;border-color:rgba(42,39,36,.12)}
+@media(max-width:768px){.cursor,.cursor-follower{display:none}}
+
+/* ─── FLOAT BUTTON ────────────────────────────── */
+.float-btn{position:fixed;bottom:32px;right:32px;z-index:900;display:inline-flex;align-items:center;gap:8px;padding:14px 28px;background:var(--charcoal);color:var(--white);border-radius:100px;font-size:13px;font-weight:500;box-shadow:var(--shadow-lg);transition:all .5s var(--ease-out);cursor:none;opacity:0;transform:translateY(14px)}
+.float-btn.visible{opacity:1;transform:translateY(0)}
+.float-btn:hover{transform:translateY(-3px);box-shadow:0 28px 72px rgba(42,39,36,.22)}
+@media(max-width:768px){.float-btn{padding:12px 20px;font-size:12px;bottom:20px;right:20px;cursor:pointer}}
+
+/* ─── NAVBAR ──────────────────────────────────── */
+.navbar{position:fixed;top:0;left:0;right:0;z-index:800;padding:24px 0;transition:all .5s var(--ease-out)}
+.navbar.scrolled{padding:14px 0;background:rgba(250,250,248,.92);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);box-shadow:0 1px 0 rgba(42,39,36,.06)}
+.nav-container{max-width:1200px;margin:0 auto;padding:0 48px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{font-family:var(--font-serif);font-size:22px;font-weight:600;color:var(--charcoal)}
+.logo-dot{color:var(--accent-blue)}
+.nav-links{display:flex;align-items:center;gap:40px}
+.nav-link{font-size:13px;color:var(--grey-dark);position:relative;transition:color .25s ease;cursor:none}
+.nav-link::after{content:'';position:absolute;bottom:-3px;left:0;width:0;height:1px;background:var(--charcoal);transition:width .5s var(--ease-out)}
+.nav-link:hover{color:var(--charcoal)}
+.nav-link:hover::after{width:100%}
+.nav-cta{padding:10px 24px;background:var(--charcoal);color:var(--white)!important;border-radius:100px;font-size:13px;font-weight:500;transition:all .5s var(--ease-out)!important}
+.nav-cta::after{display:none!important}
+.nav-cta:hover{background:var(--black);transform:translateY(-1px)}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;z-index:810}
+.hamburger span{display:block;width:24px;height:1.5px;background:var(--charcoal);transition:all .5s var(--ease-out);transform-origin:left}
+.hamburger.open span:nth-child(1){transform:rotate(40deg) scaleX(1.1)}
+.hamburger.open span:nth-child(2){opacity:0;transform:scaleX(0)}
+.hamburger.open span:nth-child(3){transform:rotate(-40deg) scaleX(1.1)}
+.mobile-menu{position:fixed;inset:0;z-index:790;background:var(--white);display:flex;align-items:center;justify-content:center;transform:translateY(-100%);transition:transform .6s var(--ease-out)}
+.mobile-menu.open{transform:translateY(0)}
+.mobile-menu ul{text-align:center}
+.mobile-link{display:block;font-family:var(--font-serif);font-size:36px;font-weight:400;color:var(--charcoal);padding:14px 0;transition:color .25s ease}
+.mobile-link:hover{color:var(--grey-mid)}
+@media(max-width:900px){.nav-links{display:none}.hamburger{display:flex}}
+@media(max-width:768px){.nav-container{padding:0 24px}}
+
+/* ─── CONTACT ─────────────────────────────────── */
+.contact{background:var(--white);position:relative;overflow:hidden}
+.contact::after{content:'';position:absolute;bottom:-100px;right:-100px;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(201,194,216,.14),transparent 70%);pointer-events:none}
+.contact-split{display:grid;grid-template-columns:1fr 1.3fr;gap:80px;align-items:start}
+.contact-sub{font-size:14px;line-height:1.75;color:var(--grey-dark);margin-bottom:36px;max-width:340px}
+.contact-dets{display:flex;flex-direction:column;gap:14px}
+.cdet{display:flex;align-items:center;gap:12px;font-size:13.5px;color:var(--grey-dark);transition:color .25s ease}
+.cdet svg{color:var(--grey-mid);flex-shrink:0}
+.cdet:hover{color:var(--charcoal)}
+.cform{background:var(--off-white);border:1px solid var(--cream);border-radius:var(--r-xl);padding:52px 48px;box-shadow:var(--shadow-sm);position:relative}
+.fg{display:flex;flex-direction:column;gap:8px;margin-bottom:22px}
+.fg label{font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--grey-mid)}
+.fg input,.fg textarea{padding:14px 18px;background:var(--white);border:1.5px solid var(--cream);border-radius:var(--r-md);font-size:14px;color:var(--charcoal);transition:all .25s ease;resize:none;width:100%}
+.fg input::placeholder,.fg textarea::placeholder{color:var(--grey-light)}
+.fg input:focus,.fg textarea:focus{border-color:var(--accent-blue);box-shadow:0 0 0 4px rgba(184,204,224,.18);outline:none}
+.f-submit{width:100%;justify-content:center;padding:18px 36px;font-size:14px;border-radius:var(--r-lg);cursor:pointer;margin-top:6px}
+.f-success{display:none;align-items:center;gap:12px;margin-top:18px;padding:14px 18px;background:rgba(189,212,196,.25);border:1px solid rgba(189,212,196,.5);border-radius:var(--r-md);font-size:13px;color:var(--charcoal)}
+.f-success.show{display:flex;animation:fadeInUp .5s var(--ease-out)}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.f-success svg{color:var(--accent-sage);flex-shrink:0}
+@media(max-width:900px){.contact-split{grid-template-columns:1fr;gap:48px}.cform{padding:36px 28px}}
+
+/* ─── FOOTER ──────────────────────────────────── */
+.footer{background:var(--charcoal);padding:80px 0 40px}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;padding-bottom:60px;border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:32px}
+.footer-logo-t{font-family:var(--font-serif);font-size:24px;font-weight:600;color:var(--white);display:block;margin-bottom:14px}
+.footer-brand p{font-size:13px;line-height:1.75;color:rgba(250,250,248,.42);max-width:240px}
+.footer-col h5{font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:rgba(250,250,248,.32);margin-bottom:18px}
+.footer-col a{display:block;font-size:13px;color:rgba(250,250,248,.52);margin-bottom:10px;transition:color .25s ease}
+.footer-col a:hover{color:var(--white)}
+.footer-bot{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.footer-bot span{font-size:12px;color:rgba(250,250,248,.28)}
+@media(max-width:900px){.footer-top{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.footer-top{grid-template-columns:1fr;gap:28px}.footer-bot{flex-direction:column;text-align:center}}
+
+/* ─── REVEAL ANIMATIONS ───────────────────────── */
+.rv{opacity:0;transform:translateY(44px);transition:opacity .9s var(--ease-out),transform .9s var(--ease-out)}
+.rv.in{opacity:1;transform:translateY(0)}
+[data-d="1"]{transition-delay:120ms}
+[data-d="2"]{transition-delay:240ms}
+[data-d="3"]{transition-delay:360ms}
+</style>
+</head>
+<body>
+
+<!-- Cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-follower" id="cf"></div>
+
+<!-- Float Button -->
+<a href="#contact" class="float-btn" id="floatBtn">
+  Book a Call
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+</a>
+
+<!-- ═══ NAVBAR ═══ -->
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <a href="index.html" class="nav-logo">Grow Sites<span class="logo-dot">.</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html#services" class="nav-link">Services</a></li>
+      <li><a href="index.html#why" class="nav-link">Why Us</a></li>
+      <li><a href="index.html#process" class="nav-link">Process</a></li>
+      <li><a href="projects.html" class="nav-link">Projects</a></li>
+      <li><a href="contact.html" class="nav-cta">Book a Call</a></li>
+    </ul>
+    <button class="hamburger" id="ham" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobMenu">
+  <ul>
+    <li><a href="index.html#services" class="mobile-link">Services</a></li>
+    <li><a href="index.html#why" class="mobile-link">Why Us</a></li>
+    <li><a href="index.html#process" class="mobile-link">Process</a></li>
+    <li><a href="projects.html" class="mobile-link">Projects</a></li>
+    <li><a href="contact.html" class="mobile-link">Book a Call</a></li>
+  </ul>
+</div>
+
+<!-- ═══ CONTACT ═══ -->
+<section class="contact" id="contact">
+  <div class="container">
+    <div class="contact-split">
+      <div>
+        <div class="section-label rv">Get In Touch</div>
+        <h2 class="section-title rv">Let's grow your<br/><em>business.</em></h2>
+        <p class="contact-sub rv">Fill out the form and we'll get back to you within 24 hours. No commitment, just a conversation.</p>
+        <div class="contact-dets rv">
+          <a href="mailto:hello@growsites.co" class="cdet">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            hello@growsites.co
+          </a>
+        </div>
+      </div>
+      <div>
+        <form class="cform" id="cForm" novalidate>
+          <div class="fg"><label>Your Name</label><input type="text" name="name" placeholder="e.g. Priya Mehta" required /></div>
+          <div class="fg"><label>Business Name</label><input type="text" name="business" placeholder="e.g. Lumière Boutique" required /></div>
+          <div class="fg"><label>WhatsApp Number</label><input type="tel" name="whatsapp" placeholder="e.g. +91 98765 43210" required /></div>
+          <div class="fg"><label>Your Message</label><textarea name="message" rows="4" placeholder="Tell us about your business and what you need help with…" required></textarea></div>
+          <button type="submit" class="btn btn-primary f-submit">
+            <span id="fBtnText">Let's Grow Your Business</span>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+          <div class="f-success" id="fSuccess">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+            <span>Message sent! We'll be in touch within 24 hours.</span>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <span class="footer-logo-t">Grow Sites<span class="logo-dot">.</span></span>
+        <p>Premium Website Creation for brands that mean business.</p>
+      </div>
+      <div class="footer-col"><h5>Services</h5><a href="index.html#services">Website Creation</a></div>
+      <div class="footer-col"><h5>Company</h5><a href="index.html#why">Why Us</a><a href="index.html#process">Process</a><a href="projects.html">Projects</a></div>
+      <div class="footer-col"><h5>Connect</h5><a href="mailto:hello@growsites.co">hello@growsites.co</a><a href="contact.html">Book a Call</a></div>
+    </div>
+    <div class="footer-bot"><span>© 2025 Grow Sites. All rights reserved.</span><span>Made with care, built for results.</span></div>
+  </div>
+</footer>
+
+<script>
+// ─── SCROLL REVEALS ───────────────────────────────
+const revEls = document.querySelectorAll('.rv');
+const revObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if(e.isIntersecting){ e.target.classList.add('in'); revObs.unobserve(e.target); }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
+revEls.forEach(el => revObs.observe(el));
+
+// ─── NAVBAR ───────────────────────────────────────
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 48);
+}, { passive: true });
+
+// ─── SMOOTH SCROLL ────────────────────────────────
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const t = document.querySelector(a.getAttribute('href'));
+    if(!t) return;
+    e.preventDefault();
+    window.scrollTo({ top: t.getBoundingClientRect().top + window.scrollY - 80, behavior: 'smooth' });
+  });
+});
+
+// ─── HAMBURGER ────────────────────────────────────
+const ham = document.getElementById('ham');
+const mob = document.getElementById('mobMenu');
+ham.addEventListener('click', () => {
+  ham.classList.toggle('open');
+  mob.classList.toggle('open');
+  document.body.style.overflow = mob.classList.contains('open') ? 'hidden' : '';
+});
+document.querySelectorAll('.mobile-link').forEach(l => {
+  l.addEventListener('click', () => { ham.classList.remove('open'); mob.classList.remove('open'); document.body.style.overflow = ''; });
+});
+
+// ─── FLOAT BUTTON ─────────────────────────────────
+const floatBtn = document.getElementById('floatBtn');
+window.addEventListener('scroll', () => {
+  floatBtn.classList.toggle('visible', window.scrollY > 400);
+}, { passive: true });
+
+// ─── CURSOR ───────────────────────────────────────
+if(window.matchMedia('(min-width:769px)').matches) {
+  const cur = document.getElementById('cursor');
+  const cf  = document.getElementById('cf');
+  let mx=0,my=0,fx=0,fy=0;
+  document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; cur.style.left=mx+'px'; cur.style.top=my+'px'; });
+  const anim = () => {
+    fx += (mx-fx)*.1; fy += (my-fy)*.1;
+    cf.style.left=fx+'px'; cf.style.top=fy+'px';
+    requestAnimationFrame(anim);
+  };
+  anim();
+  document.querySelectorAll('a,button').forEach(el => {
+    el.addEventListener('mouseenter',() => { cur.classList.add('hovered'); cf.classList.add('hovered'); });
+    el.addEventListener('mouseleave',() => { cur.classList.remove('hovered'); cf.classList.remove('hovered'); });
+  });
+  document.addEventListener('mousedown', () => { cur.style.transform='translate(-50%,-50%) scale(.7)'; });
+  document.addEventListener('mouseup',   () => { cur.style.transform='translate(-50%,-50%) scale(1)'; });
+}
+
+// ─── FORM ─────────────────────────────────────────
+document.getElementById('cForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const inputs = e.target.querySelectorAll('input,textarea');
+  let ok = true;
+  inputs.forEach(i => { if(!i.value.trim()){ ok=false; i.style.borderColor='var(--accent-rose)'; setTimeout(()=>i.style.borderColor='',2000); } });
+  if(!ok) return;
+  const btn = document.getElementById('fBtnText');
+  btn.textContent = 'Sending…';
+  setTimeout(() => {
+    e.target.reset();
+    btn.textContent = "Let's Grow Your Business";
+    const s = document.getElementById('fSuccess');
+    s.classList.add('show');
+    setTimeout(() => s.classList.remove('show'), 5000);
+  }, 1200);
+});
+</script>
+</body>
+</html>
