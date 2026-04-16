@@ -1,0 +1,37 @@
+{
+  "name": "growsites",
+  "version": "1.0.0",
+  "description": "Grow Sites - Premium Website Creation Agency with Admin Panel",
+  "main": "index.js",
+  "scripts": {
+    "test": "node quick-test.js",
+    "quick-test": "node quick-test.js",
+    "update-keys": "node update-keys.js",
+    "setup": "bash setup-admin.sh",
+    "dev": "python -m http.server 8000",
+    "build": "echo 'No build step required - static site'",
+    "deploy": "echo 'Deploy to your hosting platform (Netlify, Vercel, etc.)'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KevinDsouza055/officialgrowsites.git"
+  },
+  "keywords": [
+    "website",
+    "agency",
+    "admin-panel",
+    "leads",
+    "supabase"
+  ],
+  "author": "Grow Sites",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/KevinDsouza055/officialgrowsites/issues"
+  },
+  "homepage": "https://github.com/KevinDsouza055/officialgrowsites#readme",
+  "dependencies": {},
+  "devDependencies": {},
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}

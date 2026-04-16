@@ -583,7 +583,12 @@ section{padding:120px 0}
   </div>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
+// Supabase configuration
+const SUPABASE_URL = 'https://zqnkbipacomxvrfdhjke.supabase.co';
+        const SUPABASE_ANON_KEY = 'sb_publishable_KNKI1EGL2pE7tUsbWnDMFg_GM3NCFhH';
+
 // ─── HERO ENTRANCE ────────────────────────────────
 window.addEventListener('load', () => {
   const lines = ['hl0','hl1','hl2','hl3'];
@@ -678,21 +683,43 @@ if(tlLine && tlWrap) {
 }
 
 // ─── FORM ─────────────────────────────────────────
-document.getElementById('cForm').addEventListener('submit', e => {
+document.getElementById('cForm').addEventListener('submit', async e => {
   e.preventDefault();
   const inputs = e.target.querySelectorAll('input,textarea');
   let ok = true;
   inputs.forEach(i => { if(!i.value.trim()){ ok=false; i.style.borderColor='var(--accent-rose)'; setTimeout(()=>i.style.borderColor='',2000); } });
   if(!ok) return;
+
   const btn = document.getElementById('fBtnText');
+  const originalText = btn.textContent;
   btn.textContent = 'Sending…';
-  setTimeout(() => {
+
+  try {
+    // Send data to Supabase
+    const { data, error } = await supabase
+      .from('leads')
+      .insert([
+        {
+          name: e.target.name.value,
+          business: e.target.business.value,
+          whatsapp: e.target.whatsapp.value,
+          message: e.target.message.value,
+          status: 'new'
+        }
+      ]);
+
+    if (error) throw error;
+
     e.target.reset();
     btn.textContent = "Let's Grow Your Business";
     const s = document.getElementById('fSuccess');
     s.classList.add('show');
     setTimeout(() => s.classList.remove('show'), 5000);
-  }, 1200);
+  } catch (error) {
+    console.error('Error submitting form:', error);
+    btn.textContent = 'Error - Try Again';
+    setTimeout(() => btn.textContent = originalText, 3000);
+  }
 });
 </script>
 </body>

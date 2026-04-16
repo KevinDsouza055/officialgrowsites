@@ -1,0 +1,16 @@
+{
+  "supabase": {
+    "url": "YOUR_SUPABASE_URL_HERE",
+    "anon_key": "YOUR_SUPABASE_ANON_KEY_HERE",
+    "service_role_key": "YOUR_SERVICE_ROLE_KEY_HERE"
+  },
+  "admin": {
+    "password": "your-admin-password",
+    "email": "admin@growsites.com"
+  },
+  "features": {
+    "real_time_updates": true,
+    "email_notifications": false,
+    "auto_backup": false
+  }
+}
