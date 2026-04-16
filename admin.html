@@ -480,7 +480,7 @@
         // Supabase configuration
         const SUPABASE_URL = 'https://zqnkbipacomxvrfdhjke.supabase.co';
         const SUPABASE_ANON_KEY = 'sb_publishable_KNKI1EGL2pE7tUsbWnDMFg_GM3NCFhH';
-        const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
         let currentLeadId = null;
         let allLeads = [];
@@ -499,7 +499,7 @@
                 refreshIcon.textContent = '⏳';
                 refreshBtn.disabled = true;
 
-                const { data, error } = await supabase
+                const { data, error } = await supabaseClient
                     .from('leads')
                     .select('*')
                     .order('created_at', { ascending: false });
@@ -602,7 +602,7 @@
         // Update lead status
         async function updateStatus(leadId, newStatus) {
             try {
-                const { error } = await supabase
+                const { error } = await supabaseClient
                     .from('leads')
                     .update({ status: newStatus })
                     .eq('id', leadId);
@@ -645,7 +645,7 @@
             };
 
             try {
-                const { error } = await supabase
+                const { error } = await supabaseClient
                     .from('leads')
                     .update(updatedData)
                     .eq('id', currentLeadId);
@@ -668,7 +668,7 @@
             }
 
             try {
-                const { error } = await supabase
+                const { error } = await supabaseClient
                     .from('leads')
                     .delete()
                     .eq('id', currentLeadId);
@@ -708,7 +708,7 @@
         }
 
         // Real-time updates
-        supabase
+        supabaseClient
             .channel('leads')
             .on('postgres_changes', { event: '*', schema: 'public', table: 'leads' }, payload => {
                 console.log('Real-time update:', payload);
