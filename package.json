@@ -33,6 +33,6 @@
     "@supabase/supabase-js": "^2.103.2"
   },
   "engines": {
-  "node": "24.x"
-}
+    "node": ">=14.0.0"
+  }
 }
