@@ -268,6 +268,7 @@ section{padding:120px 0}
 .project-image{aspect-ratio:16/10;overflow:hidden;background:linear-gradient(180deg,#f8f4ed,#efe7da);width:100%}
 .project-image img{width:100%;height:100%;object-fit:cover;object-position:center top;transition:transform .3s var(--ease-out)}
 .project-image.restaurant-shot img{object-position:left top}
+.project-placeholder{height:100%;display:flex;align-items:center;justify-content:center;font-family:var(--font-serif);font-size:28px;color:var(--grey-dark);background:linear-gradient(135deg,#f8f4ed,#e7f0ea 55%,#efe7da)}
 .project-card:hover .project-image img{transform:scale(1.05)}
 @media(max-width:768px){.projects-grid{grid-template-columns:1fr;gap:30px;padding:0 24px 80px}.project-image{aspect-ratio:16/12}}
 .project-info{padding:32px}
@@ -593,6 +594,19 @@ section{padding:120px 0}
 
 It includes an interactive menu with perfectly structured grid layouts, a dynamic cart system, and responsive design optimized for all devices. The goal was to create a website that not only looks visually appealing but also feels intuitive and engaging for users.</p>
           <a href="https://cafe1-eta.vercel.app/" class="project-link" target="_blank">View Live Site</a>
+        </div>
+      </div>
+
+      <!-- Project 4 -->
+      <div class="project-card rv" data-d="3">
+        <div class="project-image">
+          <img src="images/project4.jpg" alt="New project website screenshot" style="width:100%; height:100%; object-fit:contain;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+          <div class="project-placeholder" style="display:none;">Project 4</div>
+        </div>
+        <div class="project-info">
+          <h4>Service Based</h4>
+          <p>A responsive, conversion-focused plumbing services website designed to generate high-quality leads through clear call-to-actions, fast performance, and user-centric design. Built with a mobile-first approach, the platform emphasizes emergency service accessibility, trust signals, and streamlined enquiry flow to maximize customer conversions..</p>
+          <a href="#" class="project-link" target="_blank">View Live Site</a>
         </div>
       </div>
 
