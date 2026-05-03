@@ -627,8 +627,8 @@
         // All steps completed
         if (text.includes('Yes')) {
           await submitLead(leadData);
-          addMessage('bot', "Perfect! I've shared everything with Kevin. Want to jump on a quick call and get this moving? I’ll help you with a clear plan.");
-          setTimeout(() => setQuickReplies(QR.bookCall), 500);
+          addMessage('bot', "Thank you. Your inquiry has been successfully transmitted to our team. We have received your project details and will conduct a preliminary review shortly.\n\nWould you like to proceed with scheduling your discovery call now?");
+          setTimeout(() => setQuickReplies(QR.bookCall), 600);
         } else if (text.includes('No')) {
           addMessage('bot', "No problem! Let's start over to make sure we get it right.");
           setTimeout(() => {
