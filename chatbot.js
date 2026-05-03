@@ -390,7 +390,7 @@
         <div id="gs-chat-header">
           <div class="gs-avatar">✨</div>
           <div class="gs-header-info">
-            <div class="gs-header-name">Aria — Grow Sites</div>
+              <div class="gs-header-name">Kevin's Assistant — Grow Sites</div>
             <div class="gs-header-status"><span class="gs-status-dot"></span>Online now</div>
           </div>
         </div>
@@ -452,12 +452,12 @@
   const CHAT_FLOW = [
     { 
       key: 'website_type', 
-      question: "Hey! I'm Growsites AI assistant 👋\n\nI'll ask you a few quick questions to understand your project and help you get the best solution. To start, what type of website do you need?", 
+      question: "Hey! I’m Kevin’s AI assistant 👋\n\nI’ll ask you a few quick questions to understand your project and help you get the best solution. To start, what type of website do you need?", 
       qr: QR.websiteType 
     },
     { 
       key: 'goal', 
-      question: "Nice — this sounds like a strong project. And what's the main goal of this site?", 
+      question: "Nice — this sounds like a strong project. And what is the main goal of your website?", 
       qr: QR.goal 
     },
     { 
@@ -466,7 +466,7 @@
     },
     { 
       key: 'features', 
-      question: "This type of project benefits from a clean, high-converting design. What key features do you need?", 
+      question: "This type of project benefits from a clean, high-converting design. What features do you need?", 
       qr: QR.features, multi: true 
     },
     { 
@@ -482,8 +482,8 @@
     { 
       key: 'budget', 
       question: (data) => data.location.includes('India') 
-        ? "Most clients building something solid usually fall in the ₹20k–₹30k range. What is your target budget?" 
-        : "Most clients building something solid usually fall in the $1.5k–$3k range. What is your target budget?", 
+        ? "Most clients building something solid usually fall in the ₹20,000 – ₹30,000 range. What is your target budget?" 
+        : "Most clients building something solid usually fall in the $1,500 – $3,000 range. What is your target budget?", 
       qr: (data) => data.location.includes('India') ? QR.budgetIndia : QR.budgetWorld 
     },
     { key: 'name', question: "Almost there! What's your name?" },
@@ -627,7 +627,7 @@
         // All steps completed
         if (text.includes('Yes')) {
           await submitLead(leadData);
-          addMessage('bot', "Thank you. Your inquiry has been successfully transmitted to our team. We have received your project details and will conduct a preliminary review shortly.\n\nWould you like to proceed with scheduling your discovery call now?");
+          addMessage('bot', "Want to jump on a quick call and get this moving? I’ll help you with a clear plan.");
           setTimeout(() => setQuickReplies(QR.bookCall), 600);
         } else if (text.includes('No')) {
           addMessage('bot', "No problem! Let's start over to make sure we get it right.");
@@ -645,7 +645,7 @@
         }
       }
     } catch (e) {
-      addMessage('bot', "Hmm, I'm having a small hiccup. Could you try again?");
+      addMessage('bot', "I apologize, I encountered a temporary issue. Could you please try again?");
     }
 
     isTyping = false;
