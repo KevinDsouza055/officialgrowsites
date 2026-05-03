@@ -8,56 +8,15 @@
   'use strict';
 
   // ── CONFIG ──────────────────────────────────────────
-  // Replace with your actual Gemini API key
-  const GEMINI_API_KEY = 'AIzaSyB4lW-KWpe7NAMa49e5m2NEuhFQwzgyFlQ';
-  const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`;
-
   // Where to send lead data (Vercel serverless function)
   const SUBMIT_URL = '/api/submit-lead';
-
-  // ── SYSTEM PROMPT ───────────────────────────────────
-  const SYSTEM_PROMPT = `You are Kevin's AI sales assistant for Grow Sites, a premium web development agency. Your name is "Aria". You qualify leads by having a friendly, confident, slightly premium conversation.
-
-PERSONALITY:
-- Warm, confident, never pushy or needy
-- Short responses (2-3 sentences max per message)
-- Ask ONE question at a time, never multiple
-- Light persuasion: "Nice — this sounds like a strong project." / "We've handled similar builds, this can turn out really well."
-
-CONVERSATION FLOW (follow this order strictly):
-1. Greet and ask: What type of website do you need? (Business, E-commerce, Portfolio, SaaS, Landing page)
-2. Ask: What is the main goal of your website? (Leads, Sales, Bookings, Branding)
-3. Ask: Do you have any reference websites you like?
-4. Ask: What features do you need? (Booking system, Payment gateway, Admin panel, Animations, etc.)
-5. Ask: What is your expected timeline?
-6. Ask: "Quick question — where are you based?" — give options: India 🇮🇳 or Outside India 🌍
-7. Ask budget based on location:
-   - If India: ₹8k–12k / ₹12k–20k / ₹20k–30k / ₹30k–45k / ₹45k+ with note "Most clients building something solid fall in the ₹20k–₹30k range."
-   - If Outside India: $300–800 / $800–1.5k / $1.5k–3k / $3k–6k / $6k+ with note "Most clients building something solid fall in the $1.5k–$3k range."
-8. Ask: What's your name?
-9. Ask: What's your email address?
-10. Ask: "Anything else you'd like me to know about your project?"
-11. Show a clean summary of all answers and ask "Does everything look correct?"
-12. On confirmation, say: "Perfect! I've sent your details to Kevin. Want to jump on a quick call to get this moving?" and suggest booking a call.
-
-RULES:
-- Never ask two questions at once
-- Keep responses short and conversational
-- When showing the summary, format it clearly with each field on a new line
-- When user confirms summary, output exactly: [SUBMIT_LEAD] followed by a JSON block with all collected data
-- The JSON must have keys: name, email, website_type, goal, references, features, timeline, location, budget, extra_notes
-
-JSON FORMAT EXAMPLE:
-[SUBMIT_LEAD]
-{"name":"Priya","email":"priya@test.com","website_type":"E-commerce","goal":"Sales","references":"shopify.com","features":"Payment gateway","timeline":"1 month","location":"India","budget":"₹20k–₹30k","extra_notes":"None"}`;
 
   // ── STATE ───────────────────────────────────────────
   let messages = [];
   let isOpen = false;
   let isTyping = false;
-  let step = 0;
+  let currentStepIndex = 0;
   let leadData = {};
-  let partialData = {};
 
   // ── STYLES ──────────────────────────────────────────
   const css = `
@@ -479,28 +438,70 @@ JSON FORMAT EXAMPLE:
 
   // ── QUICK REPLY SETS ─────────────────────────────────
   const QR = {
-    websiteType: ['Business', 'E-commerce', 'Portfolio', 'SaaS', 'Landing Page'],
+    websiteType: ['Business', 'E-commerce', 'Portfolio', 'SaaS', 'Landing Page', 'Other'],
     goal: ['Get Leads', 'Drive Sales', 'Take Bookings', 'Build Branding'],
     features: ['Booking System', 'Payment Gateway', 'Admin Panel', 'Animations', 'Blog', 'Contact Form'],
     timeline: ['ASAP', '2–4 weeks', '1–2 months', '3+ months'],
     location: ['India 🇮🇳', 'Outside India 🌍'],
-    budgetIndia: ['₹8k–12k', '₹12k–20k', '₹20k–30k', '₹30k–45k', '₹45k+'],
-    budgetWorld: ['$300–800', '$800–1.5k', '$1.5k–3k', '$3k–6k', '$6k+'],
+    budgetIndia: ['₹8,000 – ₹12,000', '₹12,000 – ₹20,000', '₹20,000 – ₹30,000', '₹30,000 – ₹45,000', '₹45,000+'],
+    budgetWorld: ['$300 – $800', '$800 – $1,500', '$1,500 – $3,000', '$3,000 – $6,000', '$6,000+'],
     confirm: ['Yes, looks correct! ✅', 'No, let me update something'],
     bookCall: ['Book a Call 📅', 'I\'ll reach out later'],
   };
 
-  const STEPS = [
-    'Website Type', 'Project Goal', 'References', 'Features',
-    'Timeline', 'Location', 'Budget', 'Your Name', 'Your Email',
-    'Anything Else', 'Confirm'
+  const CHAT_FLOW = [
+    { 
+      key: 'website_type', 
+      question: "Hey! I'm Growsites AI assistant 👋\n\nI'll ask you a few quick questions to understand your project and help you get the best solution. To start, what type of website do you need?", 
+      qr: QR.websiteType 
+    },
+    { 
+      key: 'goal', 
+      question: "Nice — this sounds like a strong project. And what's the main goal of this site?", 
+      qr: QR.goal 
+    },
+    { 
+      key: 'references', 
+      question: "Got it. Do you have any reference websites you like? (Or just type 'None')" 
+    },
+    { 
+      key: 'features', 
+      question: "This type of project benefits from a clean, high-converting design. What key features do you need?", 
+      qr: QR.features, multi: true 
+    },
+    { 
+      key: 'timeline', 
+      question: "What's your expected timeline?", 
+      qr: QR.timeline 
+    },
+    { 
+      key: 'location', 
+      question: "We’ve handled similar builds before, this can turn out really well. Quick question — where are you based?", 
+      qr: QR.location 
+    },
+    { 
+      key: 'budget', 
+      question: (data) => data.location.includes('India') 
+        ? "Most clients building something solid usually fall in the ₹20k–₹30k range. What is your target budget?" 
+        : "Most clients building something solid usually fall in the $1.5k–$3k range. What is your target budget?", 
+      qr: (data) => data.location.includes('India') ? QR.budgetIndia : QR.budgetWorld 
+    },
+    { key: 'name', question: "Almost there! What's your name?" },
+    { key: 'email', question: "What's your email address?" },
+    { key: 'extra_notes', question: "Anything else you'd like me to know about your project?" },
+    { 
+      key: 'confirm', 
+      question: (data) => `Great! Here is a summary:\n\n• Type: ${data.website_type}\n• Goal: ${data.goal}\n• Budget: ${data.budget}\n• Name: ${data.name}\n• Contact: ${data.email}\n\nDoes everything look correct?`, 
+      qr: QR.confirm 
+    }
   ];
 
   // ── HELPERS ──────────────────────────────────────────
-  function updateProgress(s) {
-    const pct = Math.min(100, Math.round((s / STEPS.length) * 100));
+  function updateProgress() {
+    const total = CHAT_FLOW.length;
+    const pct = Math.min(100, Math.round((currentStepIndex / total) * 100));
     progFill.style.width = pct + '%';
-    stepLabel.textContent = `Step ${Math.min(s + 1, STEPS.length)} of ${STEPS.length}`;
+    stepLabel.textContent = `Step ${Math.min(currentStepIndex + 1, total)} of ${total}`;
   }
 
   function addMessage(role, text) {
@@ -572,37 +573,6 @@ JSON FORMAT EXAMPLE:
     }
   }
 
-  // ── AI CALL ──────────────────────────────────────────
-  async function callGemini(userMessage) {
-    // Build conversation history for Gemini
-    const contents = [];
-
-    // Add history
-    messages.forEach(m => {
-      contents.push({
-        role: m.role === 'bot' ? 'model' : 'user',
-        parts: [{ text: m.text }]
-      });
-    });
-
-    // Add current message
-    contents.push({ role: 'user', parts: [{ text: userMessage }] });
-
-    const res = await fetch(GEMINI_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        system_instruction: { parts: [{ text: SYSTEM_PROMPT }] },
-        contents,
-        generationConfig: { temperature: 0.7, maxOutputTokens: 400 }
-      })
-    });
-
-    if (!res.ok) throw new Error(`API error: ${res.status}`);
-    const data = await res.json();
-    return data.candidates?.[0]?.content?.parts?.[0]?.text || "I'm having trouble connecting. Please try again!";
-  }
-
   // ── SUBMIT LEAD ──────────────────────────────────────
   async function submitLead(data) {
     try {
@@ -627,74 +597,54 @@ JSON FORMAT EXAMPLE:
     sendBtn.disabled = true;
     setQuickReplies([]);
 
-    // Save partial data
-    partialData.lastMessage = text;
-    partialData.timestamp = new Date().toISOString();
-    localStorage.setItem('gs_partial_lead', JSON.stringify(partialData));
-
     // Show user message
     addMessage('user', text);
     messages.push({ role: 'user', text });
     input.value = '';
     input.style.height = 'auto';
 
-    step++;
-    updateProgress(step);
-
-    // Show typing
-    await new Promise(r => setTimeout(r, 300));
-    showTyping();
-
     try {
-      const reply = await callGemini(text);
+      // Store the answer
+      const currentStep = CHAT_FLOW[currentStepIndex];
+      leadData[currentStep.key] = text;
+
+      currentStepIndex++;
+      updateProgress();
+
+      await new Promise(r => setTimeout(r, 300));
+      showTyping();
+      await new Promise(r => setTimeout(r, 600));
       hideTyping();
 
-      // Check if AI wants to submit lead
-      if (reply.includes('[SUBMIT_LEAD]')) {
-        try {
-          const jsonMatch = reply.match(/\{[\s\S]*\}/);
-          if (jsonMatch) {
-            leadData = JSON.parse(jsonMatch[0]);
-            await submitLead(leadData);
-            localStorage.removeItem('gs_partial_lead');
-          }
-        } catch (e) { console.warn('Parse error:', e); }
-
-        // Show clean reply without the JSON
-        const cleanReply = reply.replace('[SUBMIT_LEAD]', '').replace(/\{[\s\S]*\}/, '').trim();
-        addMessage('bot', cleanReply || "🎉 Perfect! I've sent your details to Kevin. He'll be in touch soon!");
-        messages.push({ role: 'bot', text: cleanReply });
-
-        setTimeout(() => {
-          setQuickReplies(QR.bookCall);
-        }, 600);
-
+      if (currentStepIndex < CHAT_FLOW.length) {
+        const next = CHAT_FLOW[currentStepIndex];
+        const qText = typeof next.question === 'function' ? next.question(leadData) : next.question;
+        addMessage('bot', qText);
+        
+        const qrOptions = typeof next.qr === 'function' ? next.qr(leadData) : next.qr;
+        setQuickReplies(qrOptions, next.multi);
       } else {
-        addMessage('bot', reply);
-        messages.push({ role: 'bot', text: reply });
-
-        // Set smart quick replies based on step
-        setTimeout(() => {
-          if (step === 1) setQuickReplies(QR.websiteType);
-          else if (step === 2) setQuickReplies(QR.goal);
-          else if (step === 4) setQuickReplies(QR.features, true);
-          else if (step === 5) setQuickReplies(QR.timeline);
-          else if (step === 6) setQuickReplies(QR.location);
-          else if (step === 7) {
-            const loc = messages.find(m => m.role === 'user' && (m.text.includes('India 🇮🇳') || m.text.includes('Outside India')));
-            setQuickReplies(loc?.text?.includes('Outside India') ? QR.budgetWorld : QR.budgetIndia);
-          }
-          else if (reply.toLowerCase().includes('correct')) setQuickReplies(QR.confirm);
-          else if (reply.toLowerCase().includes('book') && reply.toLowerCase().includes('call')) setQuickReplies(QR.bookCall);
-        }, 400);
+        // All steps completed
+        if (text.includes('Yes')) {
+          await submitLead(leadData);
+          addMessage('bot', "Perfect! I've shared everything with Kevin. Want to jump on a quick call and get this moving? I’ll help you with a clear plan.");
+          setTimeout(() => setQuickReplies(QR.bookCall), 500);
+        } else if (text.includes('No')) {
+          addMessage('bot', "No problem! Let's start over to make sure we get it right.");
+          setTimeout(() => {
+            currentStepIndex = 0;
+            leadData = {};
+            initChat();
+          }, 1000);
+        }
 
         // Handle book call
         if (text === 'Book a Call 📅') {
-          window.open('https://calendly.com/growsites1512', '_blank');
+          const summary = `Project: ${leadData.website_type} for ${leadData.goal}. Budget: ${leadData.budget}`;
+          window.open(`https://calendly.com/growsites1512?name=${encodeURIComponent(leadData.name)}&email=${encodeURIComponent(leadData.email)}&a1=${encodeURIComponent(summary)}`, '_blank');
         }
       }
     } catch (e) {
-      hideTyping();
       addMessage('bot', "Hmm, I'm having a small hiccup. Could you try again?");
     }
 
@@ -705,14 +655,14 @@ JSON FORMAT EXAMPLE:
 
   // ── INIT ─────────────────────────────────────────────
   async function initChat() {
-    updateProgress(0);
+    currentStepIndex = 0;
+    updateProgress();
     showTyping();
     await new Promise(r => setTimeout(r, 900));
     hideTyping();
-    const greeting = "Hey! I'm Aria, Kevin's AI assistant 👋\n\nI'll ask you a few quick questions to understand your project — shouldn't take more than 2 minutes. What type of website do you need?";
-    addMessage('bot', greeting);
-    messages.push({ role: 'bot', text: greeting });
-    setTimeout(() => setQuickReplies(QR.websiteType), 400);
+    const firstStep = CHAT_FLOW[0];
+    addMessage('bot', firstStep.question);
+    setTimeout(() => setQuickReplies(firstStep.qr), 400);
   }
 
   // ── EVENTS ───────────────────────────────────────────
@@ -728,6 +678,17 @@ JSON FORMAT EXAMPLE:
     }
     if (isOpen) setTimeout(() => input.focus(), 500);
   });
+
+  // Global function to trigger chat from anywhere
+  window.openGrowChat = () => {
+    if (!isOpen) {
+      toggle.click();
+    } else {
+      window_.classList.add('open');
+    }
+    const target = document.getElementById('gs-chat-bubble');
+    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'end' });
+  };
 
   input.addEventListener('input', () => {
     sendBtn.disabled = !input.value.trim() || isTyping;
