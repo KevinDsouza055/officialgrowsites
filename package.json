@@ -30,7 +30,8 @@
   },
   "homepage": "https://github.com/KevinDsouza055/officialgrowsites#readme",
   "dependencies": {
-    "@supabase/supabase-js": "^2.103.2"
+    "@supabase/supabase-js": "^2.103.2",
+    "nodemailer": "^8.0.7"
   },
   "engines": {
     "node": ">=14.0.0"
