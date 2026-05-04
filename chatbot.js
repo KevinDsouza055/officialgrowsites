@@ -374,8 +374,15 @@
         bottom: 76px;
         left: 0;
         border-radius: 24px;
+        /* Slide-up animation */
+        transform: translateY(100%) scale(1);
+        opacity: 0;
+        transition: transform .6s cubic-bezier(0.16, 1, 0.3, 1), opacity .5s ease;
       }
-      .gs-bubble { max-width: 86%; }
+      #gs-chat-window.open {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
       .gs-header-close { display: block; }
       #gs-input { font-size: 16px; } /* Prevents iOS auto-zoom */
       .gs-bubble { max-width: 90%; }
