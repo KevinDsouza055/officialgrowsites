@@ -134,7 +134,7 @@ section{padding:120px 0}
 .scroll-line{width:1px;height:48px;background:linear-gradient(to bottom,var(--charcoal),transparent);animation:scrollLine 2.2s ease infinite}
 @keyframes scrollLine{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform:scaleY(1);transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
 .scroll-hint span{font-size:10px;font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:var(--grey-mid)}
-@media(max-width:900px){.hero-layout{grid-template-columns:1fr;gap:28px}.hero-panel{max-width:560px}}
+@media(max-width:1100px){.hero-layout{grid-template-columns:1fr;gap:28px}.hero-panel{max-width:560px}}
 @media(max-width:768px){.hero-content{padding:120px 24px 60px}.hero-sub{font-size:15px}.hero-card{padding:22px;border-radius:24px}.hero-card h3{font-size:28px}.scroll-hint{display:none}}
 
 /* ─── MARQUEE ─────────────────────────────────── */
@@ -146,7 +146,7 @@ section{padding:120px 0}
 
 /* ─── INDUSTRIES ────────────────────────────── */
 .industries{background:var(--white);position:relative;padding-bottom:160px;overflow:hidden}
-.ind-grid{display:flex;flex-wrap:wrap;justify-content:center;gap:30px;max-width:1100px;margin:0 auto;perspective:1000px}
+.ind-grid{display:flex;flex-wrap:wrap;justify-content:center;gap:30px;max-width:1100px;margin:0 auto;perspective:1000px;padding-top:30px}
 .ind-card{position:relative;width:200px;height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:30px;background:rgba(255,255,255,0.5);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,1);border-radius:32px;box-shadow:0 10px 30px rgba(42,39,36,0.04);transition:all .6s var(--ease-out);cursor:default;will-change:transform, opacity}
 
 /* Refined floating: weightless and smooth */
@@ -296,6 +296,7 @@ section{padding:120px 0}
 .project-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-md)}
 .project-image{aspect-ratio:16/10;overflow:hidden;background:linear-gradient(180deg,#f8f4ed,#efe7da);width:100%}
 .project-image img{width:100%;height:100%;object-fit:cover;object-position:center top;transition:transform .3s var(--ease-out)}
+.project-image.contain img{object-fit:contain}
 .project-image.restaurant-shot img{object-position:left top}
 .project-placeholder{height:100%;display:flex;align-items:center;justify-content:center;font-family:var(--font-serif);font-size:28px;color:var(--grey-dark);background:linear-gradient(135deg,#f8f4ed,#e7f0ea 55%,#efe7da)}
 .project-card:hover .project-image img{transform:scale(1.05)}
@@ -646,8 +647,8 @@ section{padding:120px 0}
 
       <!-- Project 2 -->
       <div class="project-card rv" data-d="1">
-        <div class="project-image">
-          <img src="images/project2.jpg" alt="Cake Shop website screenshot" style="width:100%; height:100%; object-fit:contain;" />
+        <div class="project-image contain">
+          <img src="images/project2.jpg" alt="GrowSites Cake Shop E-commerce Platform" />
         </div>
         <div class="project-info">
           <h4>Cake Shop</h4>
@@ -658,8 +659,8 @@ section{padding:120px 0}
 
       <!-- Project 3 -->
       <div class="project-card rv" data-d="2">
-        <div class="project-image">
-          <img src="images/project3.jpg" alt="New project website screenshot" style="width:100%; height:100%; object-fit:contain;" />
+        <div class="project-image contain">
+          <img src="images/project3.jpg" alt="GrowSites Luxury Cafe Website Design" />
         </div>
         <div class="project-info">
           <h4>Cafe Website</h4>
@@ -672,8 +673,8 @@ It includes an interactive menu with perfectly structured grid layouts, a dynami
 
       <!-- Project 4 -->
       <div class="project-card rv" data-d="3">
-        <div class="project-image">
-          <img src="images/project4.jpg" alt="New project website screenshot" style="width:100%; height:100%; object-fit:contain;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+        <div class="project-image contain">
+          <img src="images/project4.jpg" alt="GrowSites Plumbing Service Leads Landing Page" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
           <div class="project-placeholder" style="display:none;">Project 4</div>
         </div>
         <div class="project-info">
@@ -697,7 +698,7 @@ It includes an interactive menu with perfectly structured grid layouts, a dynami
       </div>
       <div class="footer-col"><h5>Services</h5><a href="#services">Website Creation</a></div>
       <div class="footer-col"><h5>Company</h5><a href="#why">Why Us</a><a href="#process">Process</a><a href="projects.html">Work</a></div>
-      <div class="footer-col"><h5>Connect</h5><a href="mailto:growsites1512@gmail.com">growsites1512@gmail.com</a><a href="contact.html">Book a Call</a></div>
+      <div class="footer-col"><h5>Connect</h5><a href="mailto:growsites1512@gmail.com">growsites1512@gmail.com</a><a href="#" target="_blank">Instagram</a><a href="contact.html">Book a Call</a></div>
     </div>
     <div class="footer-bot"><span>© 2026 Grow Sites. All rights reserved.</span><span>Made with care, built for results.</span></div>
   </div>
@@ -715,23 +716,16 @@ const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 // ─── HERO ENTRANCE ────────────────────────────────
 window.addEventListener('load', () => {
-  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    ['hl0','hl1','hl2','hl3','heroSub','heroBtns','heroPanel'].forEach(id => {
-      const el = document.getElementById(id);
-      if(el) el.classList.add('in');
-    });
+  const isReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(isReduced) {
+    gsap.set('.hero-line, #heroSub, #heroBtns, #heroPanel', { opacity: 1, y: 0 });
     return;
   }
-  const lines = ['hl0','hl1','hl2','hl3'];
-  lines.forEach((id, i) => {
-    setTimeout(() => {
-      const el = document.getElementById(id);
-      if(el) el.classList.add('in');
-    }, 200 + i * 90);
-  });
-  setTimeout(() => { const el = document.getElementById('heroSub'); if(el) el.classList.add('in'); }, 600);
-  setTimeout(() => { const el = document.getElementById('heroBtns'); if(el) el.classList.add('in'); }, 750);
-  setTimeout(() => { const el = document.getElementById('heroPanel'); if(el) el.classList.add('in'); }, 850);
+  const tl = gsap.timeline({ defaults: { ease: "power4.out", duration: 1.4 }});
+  tl.to('.hero-line', { opacity: 1, y: 0, stagger: 0.1 }, 0.2)
+    .to('#heroSub', { opacity: 1, y: 0 }, 0.6)
+    .to('#heroBtns', { opacity: 1, y: 0 }, 0.75)
+    .to('#heroPanel', { opacity: 1, y: 0 }, 0.85);
 });
 
 // ─── SCROLL REVEALS ───────────────────────────────
