@@ -117,6 +117,7 @@
       padding: 18px 20px;
       display: flex;
       align-items: center;
+      justify-content: space-between;
       gap: 12px;
       flex-shrink: 0;
     }
@@ -368,12 +369,16 @@
 
     @media (max-width: 480px) {
       #gs-chat-window {
-        width: calc(100vw - 16px);
-        height: calc(100vh - 100px);
-        bottom: 72px;
-        left: 8px;
-        border-radius: 20px;
+        width: calc(100vw - 40px);
+        height: calc(100dvh - 100px);
+        bottom: 76px;
+        left: 0;
+        border-radius: 24px;
       }
+      .gs-bubble { max-width: 86%; }
+      .gs-header-close { display: block; }
+      #gs-input { font-size: 16px; } /* Prevents iOS auto-zoom */
+      .gs-bubble { max-width: 90%; }
     }
   `;
 
@@ -390,8 +395,11 @@
         <div id="gs-chat-header">
           <div class="gs-avatar">✨</div>
           <div class="gs-header-info">
-              <div class="gs-header-name">Kevin's Assistant — Grow Sites</div>
+              <div class="gs-header-name">GrowSites Assistant</div>
             <div class="gs-header-status"><span class="gs-status-dot"></span>Online now</div>
+          </div>
+          <div class="gs-header-close" id="gs-header-close">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg>
           </div>
         </div>
         <div id="gs-progress-bar"><div id="gs-progress-fill"></div></div>
@@ -429,6 +437,7 @@
   const progFill  = document.getElementById('gs-progress-fill');
   const stepLabel = document.getElementById('gs-step-label');
   const badge     = document.getElementById('gs-chat-badge');
+  const headClose = document.getElementById('gs-header-close');
 
   // Remove tooltip after animation
   setTimeout(() => {
@@ -452,7 +461,7 @@
   const CHAT_FLOW = [
     { 
       key: 'website_type', 
-      question: "Hey! I’m Kevin’s AI assistant 👋\n\nI’ll ask you a few quick questions to understand your project and help you get the best solution. To start, what type of website do you need?", 
+      question: "Hey! I’m the GrowSites AI assistant 👋\n\nI’ll ask you a few quick questions to understand your project and help you get the best solution. To start, what type of website do you need?", 
       qr: QR.websiteType 
     },
     { 
@@ -677,6 +686,12 @@
       setTimeout(initChat, 300);
     }
     if (isOpen) setTimeout(() => input.focus(), 500);
+  });
+
+  // Mobile Header Close
+  headClose.addEventListener('click', (e) => {
+    e.stopPropagation();
+    toggle.click();
   });
 
   // Global function to trigger chat from anywhere
