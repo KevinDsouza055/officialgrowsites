@@ -460,7 +460,7 @@
     timeline: ['ASAP', '2–4 weeks', '1–2 months', '3+ months'],
     location: ['India 🇮🇳', 'Outside India 🌍'],
     budgetIndia: ['₹8,000 – ₹12,000', '₹12,000 – ₹20,000', '₹20,000 – ₹30,000', '₹30,000 – ₹45,000', '₹45,000+'],
-    budgetWorld: ['$300 – $800', '$800 – $1,500', '$1,500 – $3,000', '$3,000 – $6,000', '$6,000+'],
+    budgetWorld: ['$150 – $500', '$500 – $1,500', '$1,500 – $3,000', '$3,000 – $5,000', '$5,000 – $8,000', '$8,000+'],
     confirm: ['Yes, looks correct! ✅', 'No, let me update something'],
     bookCall: ['Book a Call 📅', 'I\'ll reach out later'],
   };
@@ -497,10 +497,10 @@
     },
     { 
       key: 'budget', 
-      question: (data) => data.location.includes('India') 
+      question: (data) => data.location === 'India 🇮🇳' 
         ? "Most clients building something solid usually fall in the ₹20,000 – ₹30,000 range. What is your target budget?" 
         : "Most clients building something solid usually fall in the $1,500 – $3,000 range. What is your target budget?", 
-      qr: (data) => data.location.includes('India') ? QR.budgetIndia : QR.budgetWorld 
+      qr: (data) => data.location === 'India 🇮🇳' ? QR.budgetIndia : QR.budgetWorld 
     },
     { key: 'name', question: "Almost there! What's your name?" },
     { key: 'email', question: "What's your email address?" },
