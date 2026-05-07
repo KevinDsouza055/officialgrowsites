@@ -790,6 +790,17 @@ window.addEventListener('keydown', e => {
   if(e.key === 'Escape' && mob.classList.contains('open')) setMenuState(false);
 });
 
+// Swipe up to close mobile menu
+let menuTouchStartY = 0;
+mob.addEventListener('touchstart', e => {
+  menuTouchStartY = e.changedTouches[0].screenY;
+}, { passive: true });
+mob.addEventListener('touchend', e => {
+  const touchEndY = e.changedTouches[0].screenY;
+  // If swipe up is more than 50px and menu is open
+  if (menuTouchStartY - touchEndY > 50 && mob.classList.contains('open')) setMenuState(false);
+}, { passive: true });
+
 // ─── FLOAT BUTTON ─────────────────────────────────
 const floatBtn = document.getElementById('floatBtn');
 window.addEventListener('scroll', () => {
@@ -889,7 +900,7 @@ document.getElementById('cForm').addEventListener('submit', async e => {
 
     e.target.reset();
     btn.textContent = "Let's Grow Your Business";
-    clearFormError();
+  clearFormError();
     const s = document.getElementById('fSuccess');
     s.classList.add('show');
     setTimeout(() => s.classList.remove('show'), 5000);

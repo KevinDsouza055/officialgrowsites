@@ -28,7 +28,7 @@ button,a,input,textarea,select{touch-action:manipulation}
   --white:#FAFAF8;--off-white:#F5F3EE;--cream:#EDE9E1;--beige:#E4DED3;
   --grey-light:#D6D0C8;--grey-mid:#A8A29A;--grey-dark:#6B6560;
   --charcoal:#2A2724;--black:#1A1816;
-  --accent-blue:#B8CCE0;--accent-lav:#C9C2D8;--accent-sage:#BDD4C4;--accent-rose:#DDBFBF;
+   --accent-blue:#B8CCE0;--accent-lav:#C9C2D8;--accent-sage:#BDD4C4;--accent-rose:#DDBFBF;
   --font-serif:'Cormorant Garamond',Georgia,serif;
   --font-sans:'DM Sans',system-ui,sans-serif;
   --ease-out:cubic-bezier(0.16,1,0.3,1);
@@ -288,6 +288,17 @@ window.addEventListener('resize', () => {
 window.addEventListener('keydown', e => {
   if(e.key === 'Escape' && mob.classList.contains('open')) setMenuState(false);
 });
+
+// Swipe up to close mobile menu
+let menuTouchStartY = 0;
+mob.addEventListener('touchstart', e => {
+  menuTouchStartY = e.changedTouches[0].screenY;
+}, { passive: true });
+mob.addEventListener('touchend', e => {
+  const touchEndY = e.changedTouches[0].screenY;
+  // If swipe up is more than 50px and menu is open
+  if (menuTouchStartY - touchEndY > 50 && mob.classList.contains('open')) setMenuState(false);
+}, { passive: true });
 
 // ─── FLOAT BUTTON ─────────────────────────────────
 const floatBtn = document.getElementById('floatBtn');

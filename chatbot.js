@@ -695,6 +695,17 @@
     if (isOpen) setTimeout(() => input.focus(), 500);
   });
 
+  // Swipe down to close on mobile
+  let touchStartY = 0;
+  window_.addEventListener('touchstart', e => {
+    touchStartY = e.changedTouches[0].screenY;
+  }, { passive: true });
+  window_.addEventListener('touchend', e => {
+    const touchEndY = e.changedTouches[0].screenY;
+    // If swipe down is more than 50px and chat is open
+    if (touchEndY - touchStartY > 50 && isOpen) toggle.click();
+  }, { passive: true });
+
   // Mobile Header Close
   headClose.addEventListener('click', (e) => {
     e.stopPropagation();
