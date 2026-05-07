@@ -620,17 +620,16 @@
     input.style.height = 'auto';
 
     try {
-      // Store the answer
-      const currentStep = CHAT_FLOW[currentStepIndex];
-      leadData[currentStep.key] = text;
-
-      currentStepIndex++;
-      updateProgress();
-
-      await new Promise(r => setTimeout(r, 300));
-      showTyping();
-      await new Promise(r => setTimeout(r, 600));
-      hideTyping();
+      if (currentStepIndex < CHAT_FLOW.length) {
+        const currentStep = CHAT_FLOW[currentStepIndex];
+        leadData[currentStep.key] = text;
+        currentStepIndex++;
+        updateProgress();
+        await new Promise(r => setTimeout(r, 300));
+        showTyping();
+        await new Promise(r => setTimeout(r, 600));
+        hideTyping();
+      }
 
       if (currentStepIndex < CHAT_FLOW.length) {
         const next = CHAT_FLOW[currentStepIndex];
@@ -650,14 +649,15 @@
           setTimeout(() => {
             currentStepIndex = 0;
             leadData = {};
+            messages = [];
+            msgs.innerHTML = '';
             initChat();
           }, 1000);
         }
 
         // Handle book call
         if (text === 'Book a Call 📅') {
-          const summary = `Project: ${leadData.website_type} for ${leadData.goal}. Budget: ${leadData.budget}`;
-          window.open(`https://calendly.com/growsites1512?name=${encodeURIComponent(leadData.name)}&email=${encodeURIComponent(leadData.email)}&a1=${encodeURIComponent(summary)}`, '_blank');
+          window.location.href = 'contact.html';
         }
       }
     } catch (e) {
