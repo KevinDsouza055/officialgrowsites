@@ -54,6 +54,10 @@ section{padding:120px 0}
 .btn:focus-visible,.nav-link:focus-visible,.nav-cta:focus-visible,.mobile-link:focus-visible,.cdet:focus-visible,.hamburger:focus-visible,.float-btn:focus-visible,.fg input:focus-visible,.fg textarea:focus-visible{outline:2px solid var(--charcoal);outline-offset:3px}
 @media(max-width:768px){.container{padding:0 24px}.btn{cursor:pointer}}
 
+@media(max-width:768px){
+  section{padding:80px 0}
+  .section-title{margin-bottom:40px}
+}
 /* ─── CURSOR ──────────────────────────────────── */
 .cursor{position:fixed;width:8px;height:8px;border-radius:50%;background:var(--charcoal);pointer-events:none;z-index:9999;transform:translate(-50%,-50%);mix-blend-mode:multiply;transition:width .2s,height .2s}
 .cursor-follower{position:fixed;width:36px;height:36px;border-radius:50%;border:1.5px solid rgba(42,39,36,.25);pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .18s var(--ease-out),height .18s var(--ease-out),border-color .18s}
@@ -97,6 +101,7 @@ section{padding:120px 0}
 /* ─── CONTACT ─────────────────────────────────── */
 .contact{background:var(--white);position:relative;overflow:hidden}
 .contact::after{content:'';position:absolute;bottom:-100px;right:-100px;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(201,194,216,.14),transparent 70%);pointer-events:none}
+@media(max-width:768px){.contact::after{width:250px;height:250px;bottom:-50px;right:-50px}}
 .contact-split{display:grid;grid-template-columns:1fr 1.3fr;gap:80px;align-items:start}
 .contact-sub{font-size:14px;line-height:1.75;color:var(--grey-dark);margin-bottom:36px;max-width:340px}
 .contact-dets{display:flex;flex-direction:column;gap:14px}
