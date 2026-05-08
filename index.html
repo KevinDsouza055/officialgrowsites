@@ -295,15 +295,14 @@ section{padding:120px 0}
 .project-card{background:var(--white);border:1px solid var(--cream);border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--shadow-sm);transition:all .3s var(--ease-out)}
 .project-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-md)}
 .project-image{aspect-ratio:16/10;overflow:hidden;background:linear-gradient(180deg,#f8f4ed,#efe7da);width:100%}
-.project-image img{width:100%;height:100%;object-fit:cover;object-position:center top;transition:transform .3s var(--ease-out)}
-.project-image.contain img{object-fit:contain}
-.project-image.restaurant-shot img{object-position:left top}
 .project-placeholder{height:100%;display:flex;align-items:center;justify-content:center;font-family:var(--font-serif);font-size:28px;color:var(--grey-dark);background:linear-gradient(135deg,#f8f4ed,#e7f0ea 55%,#efe7da)}
 .project-card:hover .project-image img{transform:scale(1.05)}
 @media(max-width:768px){.projects-grid{grid-template-columns:1fr;gap:30px;padding:0 24px 80px}.project-image{aspect-ratio:16/12}}
 .project-info{padding:32px}
 .project-info h4{font-family:var(--font-serif);font-size:24px;font-weight:400;color:var(--charcoal);margin-bottom:12px;line-height:1.2}
-.project-info p{font-size:14px;line-height:1.75;color:var(--grey-dark);margin-bottom:20px}
+.project-info p{display:none;font-size:14px;line-height:1.75;color:var(--grey-dark);margin-bottom:20px;margin-top:12px}
+.project-card.show-desc .project-info p{display:block}
+.project-card{cursor:pointer}
 .project-link{display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:500;color:var(--charcoal);text-decoration:underline;text-underline-offset:4px;transition:color .3s ease}
 .project-link:hover{color:var(--grey-dark)}
 .project-link svg{transition:transform .3s ease}
@@ -634,66 +633,88 @@ section{padding:120px 0}
     <div class="projects-grid">
 
       <!-- Project 1 -->
-      <div class="project-card rv">
+      <div class="project-card rv" onclick="this.classList.toggle('show-desc')">
         <div class="project-image">
-          <img src="images/project1.jpg" alt="Sea Food Restaurant website screenshot" />
+          <div class="project-placeholder">Sea Food</div>
         </div>
         <div class="project-info">
           <h4>Sea Food Restaurant</h4>
           <p>A modern restaurant website designed to showcase signature dishes, build trust quickly, and make it easier for customers to explore the menu and book a visit.</p>
-          <a href="https://amrut-kinara-website.vercel.app/" class="project-link" target="_blank">View Live Site</a>
+          <a href="https://amrut-kinara-website.vercel.app/" class="project-link" target="_blank" onclick="event.stopPropagation()">View Live Site</a>
         </div>
       </div>
 
       <!-- Project 2 -->
-      <div class="project-card rv" data-d="1">
+      <div class="project-card rv" data-d="1" onclick="this.classList.toggle('show-desc')">
         <div class="project-image">
-          <img src="images/project2.jpg" alt="GrowSites Cake Shop E-commerce Platform" />
+          <div class="project-placeholder">Cake Shop</div>
         </div>
         <div class="project-info">
           <h4>Cake Shop</h4>
           <p>A modern cake shop experience built to delight both taste and convenience. Customers can explore a wide range of freshly baked cakes while enjoying a rewarding offer — buy six cakes and get one free. With secure signup and login, users can track their purchases, rewards, and order history seamlessly. The standout feature allows customers to design their own cake, choosing flavors, layers, toppings, and custom messages to create something truly personal. Blending creativity, quality, and a smooth digital experience, it transforms a simple cake purchase into something memorable.</p>
-          <a href="https://cake-shop-psi.vercel.app/" class="project-link" target="_blank">View Live Site</a>
+          <a href="https://cake-shop-psi.vercel.app/" class="project-link" target="_blank" onclick="event.stopPropagation()">View Live Site</a>
         </div>
       </div>
 
       <!-- Project 3 -->
-      <div class="project-card rv" data-d="2">
+      <div class="project-card rv" data-d="2" onclick="this.classList.toggle('show-desc')">
         <div class="project-image">
-          <img src="images/project3.jpg" alt="GrowSites Luxury Cafe Website Design" />
+          <div class="project-placeholder">Cafe</div>
         </div>
         <div class="project-info">
           <h4>Cafe Website</h4>
           <p>This project is a luxury café website concept built to showcase modern frontend design and interaction. The website focuses on delivering a cinematic user experience through smooth animations, elegant layouts, and a premium visual identity.
 
 It includes an interactive menu with perfectly structured grid layouts, a dynamic cart system, and responsive design optimized for all devices. The goal was to create a website that not only looks visually appealing but also feels intuitive and engaging for users.</p>
-          <a href="https://cafe1-eta.vercel.app/" class="project-link" target="_blank">View Live Site</a>
+          <a href="https://cafe1-eta.vercel.app/" class="project-link" target="_blank" onclick="event.stopPropagation()">View Live Site</a>
         </div>
       </div>
 
       <!-- Project 4 -->
-      <div class="project-card rv" data-d="3">
+      <div class="project-card rv" data-d="3" onclick="this.classList.toggle('show-desc')">
         <div class="project-image">
-          <img src="images/project4.jpg" alt="GrowSites Plumbing Service Leads Landing Page" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
-          <div class="project-placeholder" style="display:none;">Project 4</div>
+          <div class="project-placeholder">Service</div>
         </div>
         <div class="project-info">
           <h4>Service Based</h4>
           <p>A responsive, conversion-focused plumbing services website designed to generate high-quality leads through clear call-to-actions, fast performance, and user-centric design. Built with a mobile-first approach, the platform emphasizes emergency service accessibility, trust signals, and streamlined enquiry flow to maximize customer conversions..</p>
-          <a href="https://servicebased.vercel.app/" class="project-link" target="_blank">View Live Site</a>
+          <a href="https://servicebased.vercel.app/" class="project-link" target="_blank" onclick="event.stopPropagation()">View Live Site</a>
         </div>
       </div>
 
       <!-- Project 5 -->
-      <div class="project-card rv" data-d="0">
+      <div class="project-card rv" data-d="0" onclick="this.classList.toggle('show-desc')">
         <div class="project-image">
-          <img src="images/project5.jpg" alt="JewelWebsite - Premium Jewellery Brand" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
-          <div class="project-placeholder" style="display:none;">JewelWebsite</div>
+          <div class="project-placeholder">Jewelry</div>
         </div>
         <div class="project-info">
           <h4>JewelWebsite</h4>
           <p>A high-end jewellery brand website focused on elegance and luxury. Featuring cinematic product showcases, refined typography, and a seamless experience designed to reflect the brand's craftsmanship.</p>
-          <a href="https://jewel-web-xi.vercel.app/" class="project-link" target="_blank">View Live Site</a>
+          <a href="https://jewel-web-xi.vercel.app/" class="project-link" target="_blank" onclick="event.stopPropagation()">View Live Site</a>
+        </div>
+      </div>
+
+      <!-- Project 6 -->
+      <div class="project-card rv" data-d="1" onclick="this.classList.toggle('show-desc')">
+        <div class="project-image">
+          <div class="project-placeholder">Salon</div>
+        </div>
+        <div class="project-info">
+          <h4>Premium Salon</h4>
+          <p>Following the high-conversion success of our restaurant projects, this salon website focuses on appointment-driven growth. It combines the premium aesthetics of our jewelry site with a robust booking flow tailored for local service businesses.</p>
+          <a href="https://salon-gamma-red.vercel.app/" class="project-link" target="_blank" onclick="event.stopPropagation()">View Live Site</a>
+        </div>
+      </div>
+
+      <!-- Project 7 -->
+      <div class="project-card rv" data-d="2" onclick="this.classList.toggle('show-desc')">
+        <div class="project-image">
+          <div class="project-placeholder">Farm</div>
+        </div>
+        <div class="project-info">
+          <h4>MyNestAgro</h4>
+          <p>Building on our e-commerce expertise seen in the Cake Shop project, MyNestAgro brings a farm-to-table marketplace to life. It combines complex product categorization with the clean, mobile-first design principles found across our entire portfolio.</p>
+          <a href="https://mynestagrofarm.vercel.app/" class="project-link" target="_blank" onclick="event.stopPropagation()">View Live Site</a>
         </div>
       </div>
 
@@ -819,7 +840,7 @@ if(canUseCursor.matches) {
     requestAnimationFrame(anim);
   };
   anim();
-  document.querySelectorAll('a,button,.s-card,.outcome-card').forEach(el => {
+  document.querySelectorAll('a,button,.s-card,.outcome-card,.project-card').forEach(el => {
     el.addEventListener('mouseenter',() => { cur.classList.add('hovered'); cf.classList.add('hovered'); });
     el.addEventListener('mouseleave',() => { cur.classList.remove('hovered'); cf.classList.remove('hovered'); });
   });
