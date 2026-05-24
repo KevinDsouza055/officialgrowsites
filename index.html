@@ -926,7 +926,9 @@ function clearFormError() {
   errorEl.textContent = '';
 }
 
-document.getElementById('cForm').addEventListener('submit', async e => {
+const contactForm = document.getElementById('cForm');
+if (contactForm) {
+  contactForm.addEventListener('submit', async e => {
   e.preventDefault();
   clearFormError();
 
@@ -978,6 +980,7 @@ document.getElementById('cForm').addEventListener('submit', async e => {
     setTimeout(() => btn.textContent = originalText, 3000);
   }
 });
+}
 </script>
 </body>
 </html>
