@@ -21,7 +21,8 @@ ul{list-style:none}
 button{border:none;background:none;cursor:pointer;font:inherit}
 input,textarea{font:inherit;border:none;outline:none;background:none}
 button,a,input,textarea,select{touch-action:manipulation}
-@media(hover:hover) and (pointer:fine){body{cursor:none}}
+body.custom-cursor-active{cursor:none}
+body.custom-cursor-active a, body.custom-cursor-active button{cursor:none}
 
 /* ─── VARIABLES ───────────────────────────────── */
 :root{
@@ -166,12 +167,11 @@ section{padding:120px 0}
 .ph-farm{background:linear-gradient(135deg,#BDD4C4 0%,#F5F3EE 100%)}
 .ph-mma{background:linear-gradient(135deg,#2A2724 0%,#6B6560 100%)}
 .project-info{padding:24px}
-.project-info h4{font-family:var(--font-serif);font-size:24px;font-weight:500;color:var(--charcoal);margin-bottom:8px}
+.project-info h4{font-family:var(--font-serif);font-size:20px;font-weight:500;color:var(--charcoal);margin-bottom:8px}
 .project-info p{display:none;font-size:14px;line-height:1.6;color:var(--grey-dark);margin-bottom:16px;margin-top:12px}
 .project-card.show-desc .project-info p{display:block}
 .project-card{cursor:pointer}
-.project-link{display:inline-block;font-size:13px;color:var(--accent-blue);font-weight:500;text-decoration:underline}
-@media(max-width:768px){.projects-grid{grid-template-columns:1fr;gap:30px}.project-img{aspect-ratio:16/12}}
+.project-link{display:inline-block;font-size:13px;color:var(--accent-blue);font-weight:500;text-decoration:underline}@media(max-width:768px){.projects-grid{grid-template-columns:repeat(2, 1fr);gap:16px;padding:0 16px 80px}.project-img{aspect-ratio:1/1}.project-placeholder{font-size:16px;padding:12px;text-align:center}.project-info{padding:16px;text-align:center}.project-info h4{font-size:15px;margin-bottom:6px}.project-link{font-size:12px}}
 
 /* ─── FOOTER ──────────────────────────────────── */
 .footer{background:var(--charcoal);padding:80px 0 40px}
@@ -258,7 +258,7 @@ section{padding:120px 0}
         <div class="project-img">
           <div class="project-placeholder ph-mma">
             <svg class="ph-icon" width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.2" style="opacity: 0.8;"><circle cx="12" cy="12" r="10"/><path d="m12 8-4 4 4 4 4-4-4-4Z"/><path d="M12 2v4"/><path d="M12 18v4"/><path d="M2 12h4"/><path d="M18 12h4"/></svg>
-            <span style="color: white; opacity: 0.9;">Combat 360 MMA</span>
+            <span style="color: white; opacity: 0.9; text-align: center; padding: 0 10px;">Combat 360 MMA</span>
           </div>
         </div>
         <div class="project-info">
@@ -386,7 +386,7 @@ This project highlights a strong understanding of UI/UX principles, clean visual
       </div>
       <div class="footer-col"><h5>Services</h5><a href="index.html#services">Website Creation</a></div>
       <div class="footer-col"><h5>Company</h5><a href="index.html#why">Why Us</a><a href="index.html#process">Process</a><a href="projects.html">Projects</a></div>
-      <div class="footer-col"><h5>Connect</h5><a href="mailto:growsites1512@gmail.com">growsites1512@gmail.com</a><a href="contact.html">Book a Call</a></div>
+      <div class="footer-col"><h5>Connect</h5><a href="mailto:growsites1512@gmail.com">growsites1512@gmail.com</a><a href="https://www.instagram.com/officialgrowsites/?__pwa=1" target="_blank" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 6px;"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>Instagram</a><a href="contact.html">Book a Call</a></div>
     </div>
     <div class="footer-bot"><span>© 2025 Grow Sites. All rights reserved.</span><span>Made with care, built for results.</span></div>
   </div>
@@ -462,6 +462,7 @@ window.addEventListener('scroll', () => {
 
 // ─── CURSOR ───────────────────────────────────────
 if(canUseCursor.matches) {
+  document.body.classList.add('custom-cursor-active');
   const cur = document.getElementById('cursor');
   const cf  = document.getElementById('cf');
   let mx=0,my=0,fx=0,fy=0;
