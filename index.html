@@ -306,6 +306,7 @@ section{padding:120px 0}
 .ph-jewelry{background:linear-gradient(135deg,#FDF8F2 0%,#EDE9E1 100%)}
 .ph-salon{background:linear-gradient(135deg,#C9C2D8 0%,#F5F3EE 100%)}
 .ph-farm{background:linear-gradient(135deg,#BDD4C4 0%,#F5F3EE 100%)}
+.ph-mma{background:linear-gradient(135deg,#2A2724 0%,#6B6560 100%)}
 @media(max-width:768px){.projects-grid{grid-template-columns:1fr;gap:30px;padding:0 24px 80px}.project-image{aspect-ratio:16/12}}
 .project-info{padding:32px}
 .project-info h4{font-family:var(--font-serif);font-size:24px;font-weight:400;color:var(--charcoal);margin-bottom:12px;line-height:1.2}
@@ -640,6 +641,21 @@ section{padding:120px 0}
     <div class="section-label rv">Featured Projects</div>
     <h2 class="section-title rv">A few sites we've<br/><em>brought to life.</em></h2>
     <div class="projects-grid">
+
+      <!-- Project 0: Combat 360 MMA -->
+      <div class="project-card rv" onclick="this.classList.toggle('show-desc')">
+        <div class="project-image">
+          <div class="project-placeholder ph-mma">
+            <svg class="ph-icon" width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.2" style="opacity: 0.8;"><circle cx="12" cy="12" r="10"/><path d="m12 8-4 4 4 4 4-4-4-4Z"/><path d="M12 2v4"/><path d="M12 18v4"/><path d="M2 12h4"/><path d="M18 12h4"/></svg>
+            <span style="color: white; opacity: 0.9;">Combat 360 MMA</span>
+          </div>
+        </div>
+        <div class="project-info">
+          <h4>Combat 360 MMA</h4>
+          <p>A bold, high-performance website for a premier MMA gym. Designed to showcase world-class training programs, expert coaches, and drive new memberships through an energetic, mobile-first experience.</p>
+          <a href="https://www.combat360mma.com/" class="project-link" target="_blank" onclick="event.stopPropagation()">View Live Site</a>
+        </div>
+      </div>
 
       <!-- Project 1 -->
       <div class="project-card rv" onclick="this.classList.toggle('show-desc')">
