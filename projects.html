@@ -14,7 +14,7 @@
 /* ─── RESET ─────────────────────────────────────── */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;-webkit-text-size-adjust:100%}
-body{overflow-x:hidden;font-family:'DM Sans',system-ui,sans-serif;background:#FAFAF8;color:#2A2724;line-height:1.6}
+body{overflow-x:hidden;font-family:'DM Sans',system-ui,sans-serif;background:var(--white);color:var(--charcoal);line-height:1.6}
 img,video{max-width:100%;display:block}
 a{text-decoration:none;color:inherit}
 ul{list-style:none}
@@ -60,11 +60,19 @@ section{padding:120px 0}
   .section-title{margin-bottom:40px}
 }
 /* ─── CURSOR ──────────────────────────────────── */
-.cursor{position:fixed;width:8px;height:8px;border-radius:50%;background:var(--charcoal);pointer-events:none;z-index:9999;transform:translate(-50%,-50%);mix-blend-mode:multiply;transition:width .2s,height .2s}
+.cursor{position:fixed;width:8px;height:8px;border-radius:50%;background:var(--charcoal);pointer-events:none;z-index:10000;transform:translate(-50%,-50%);transition:width .2s,height .2s;mix-blend-mode:multiply}
 .cursor-follower{position:fixed;width:36px;height:36px;border-radius:50%;border:1.5px solid rgba(42,39,36,.25);pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .18s var(--ease-out),height .18s var(--ease-out),border-color .18s}
 .cursor.hovered{width:14px;height:14px}
 .cursor-follower.hovered{width:52px;height:52px;border-color:rgba(42,39,36,.12)}
 @media(hover:none),(pointer:coarse),(prefers-reduced-motion:reduce){.cursor,.cursor-follower{display:none}}
+
+/* ─── THEME TOGGLE ────────────────────────────── */
+.theme-toggle{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--charcoal);transition:all .3s ease;cursor:none}
+.theme-toggle:hover{background:rgba(128,128,128,.1)}
+.theme-toggle .sun{display:none}
+.theme-toggle .moon{display:block}
+[data-theme="dark"] .theme-toggle .sun{display:block}
+[data-theme="dark"] .theme-toggle .moon{display:none}
 
 /* ─── FLOAT BUTTON ────────────────────────────── */
 .float-btn{position:fixed;bottom:max(20px,calc(env(safe-area-inset-bottom) + 12px));right:max(20px,calc(env(safe-area-inset-right) + 12px));z-index:900;display:inline-flex;align-items:center;gap:8px;padding:14px 28px;background:var(--charcoal);color:var(--white);border-radius:100px;font-size:13px;font-weight:500;box-shadow:var(--shadow-lg);transition:all .5s var(--ease-out);cursor:none;opacity:0;transform:translateY(14px);max-width:min(calc(100vw - 32px),320px)}

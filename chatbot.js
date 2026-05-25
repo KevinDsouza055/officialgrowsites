@@ -32,7 +32,7 @@
       width: 56px;
       height: 56px;
       border-radius: 50%;
-      background: #2A2724;
+      background: var(--charcoal);
       border: none;
       cursor: pointer;
       display: flex;
@@ -93,9 +93,9 @@
       left: 0;
       width: min(380px, calc(100vw - 24px));
       height: min(580px, calc(100vh - 120px));
-      background: #FAFAF8;
+      background: var(--white);
       border-radius: 24px;
-      box-shadow: 0 24px 80px rgba(42,39,36,.18), 0 0 0 1px rgba(42,39,36,.06);
+      box-shadow: var(--shadow-lg), 0 0 0 1px rgba(42,39,36,.06);
       display: flex;
       flex-direction: column;
       overflow: hidden;
@@ -113,7 +113,7 @@
 
     /* Header */
     #gs-chat-header {
-      background: #2A2724;
+      background: var(--charcoal);
       padding: 18px 20px;
       display: flex;
       align-items: center;
@@ -138,12 +138,12 @@
     .gs-header-name {
       font-size: 14px;
       font-weight: 500;
-      color: #FAFAF8;
+      color: var(--white);
       line-height: 1.2;
     }
     .gs-header-status {
       font-size: 11px;
-      color: rgba(250,250,248,.45);
+      color: var(--grey-mid);
       display: flex;
       align-items: center;
       gap: 5px;
@@ -159,7 +159,7 @@
     /* Progress */
     #gs-progress-bar {
       height: 3px;
-      background: rgba(42,39,36,.08);
+      background: var(--beige);
       flex-shrink: 0;
     }
     #gs-progress-fill {
@@ -174,9 +174,9 @@
       font-weight: 500;
       letter-spacing: .1em;
       text-transform: uppercase;
-      color: #A8A29A;
-      background: #F5F3EE;
-      border-bottom: 1px solid #EDE9E1;
+      color: var(--grey-mid);
+      background: var(--off-white);
+      border-bottom: 1px solid var(--beige);
       flex-shrink: 0;
     }
 
@@ -192,7 +192,7 @@
     }
     #gs-messages::-webkit-scrollbar { width: 4px; }
     #gs-messages::-webkit-scrollbar-track { background: transparent; }
-    #gs-messages::-webkit-scrollbar-thumb { background: #D6D0C8; border-radius: 4px; }
+    #gs-messages::-webkit-scrollbar-thumb { background: var(--grey-light); border-radius: 4px; }
 
     .gs-msg {
       display: flex;
@@ -227,16 +227,16 @@
       border-radius: 18px;
       font-size: 13.5px;
       line-height: 1.55;
-      color: #2A2724;
+      color: var(--charcoal);
     }
     .gs-msg.bot .gs-bubble {
-      background: #F5F3EE;
-      border: 1px solid #EDE9E1;
+      background: var(--off-white);
+      border: 1px solid var(--beige);
       border-bottom-left-radius: 6px;
     }
     .gs-msg.user .gs-bubble {
-      background: #2A2724;
-      color: #FAFAF8;
+      background: var(--charcoal);
+      color: var(--white);
       border-bottom-right-radius: 6px;
     }
 
@@ -272,41 +272,41 @@
     .gs-qr {
       padding: 8px 14px;
       border-radius: 100px;
-      border: 1.5px solid #D6D0C8;
-      background: #FAFAF8;
+      border: 1.5px solid var(--grey-light);
+      background: var(--white);
       font-size: 12.5px;
-      color: #2A2724;
+      color: var(--charcoal);
       cursor: pointer;
       transition: all .25s ease;
       font-family: 'DM Sans', system-ui, sans-serif;
       white-space: nowrap;
     }
     .gs-qr:hover {
-      border-color: #2A2724;
-      background: #2A2724;
-      color: #FAFAF8;
+      border-color: var(--charcoal);
+      background: var(--charcoal);
+      color: var(--white);
       transform: translateY(-1px);
     }
 
     /* Input */
     #gs-input-area {
       padding: 12px 16px;
-      border-top: 1px solid #EDE9E1;
+      border-top: 1px solid var(--beige);
       display: flex;
       gap: 10px;
       align-items: flex-end;
       flex-shrink: 0;
-      background: #FAFAF8;
+      background: var(--white);
     }
     #gs-input {
       flex: 1;
       padding: 10px 14px;
-      border: 1.5px solid #EDE9E1;
+      border: 1.5px solid var(--beige);
       border-radius: 12px;
       font-size: 13.5px;
       font-family: 'DM Sans', system-ui, sans-serif;
-      color: #2A2724;
-      background: #F5F3EE;
+      color: var(--charcoal);
+      background: var(--off-white);
       resize: none;
       outline: none;
       transition: border-color .25s ease;
@@ -320,7 +320,7 @@
       width: 38px;
       height: 38px;
       border-radius: 10px;
-      background: #2A2724;
+      background: var(--charcoal);
       border: none;
       cursor: pointer;
       display: flex;
@@ -330,7 +330,7 @@
       transition: all .25s ease;
       outline: none;
     }
-    #gs-send:hover { background: #1A1816; transform: scale(1.05); }
+    #gs-send:hover { background: var(--black); transform: scale(1.05); }
     #gs-send:disabled { opacity: .4; cursor: not-allowed; transform: none; }
 
     /* Tooltip */
@@ -338,8 +338,8 @@
       position: absolute;
       bottom: 68px;
       left: 0;
-      background: #2A2724;
-      color: #FAFAF8;
+      background: var(--charcoal);
+      color: var(--white);
       padding: 10px 16px;
       border-radius: 12px;
       font-size: 13px;
@@ -363,7 +363,7 @@
       left:18px;
       width:12px;
       height:6px;
-      background:#2A2724;
+      background:var(--charcoal);
       clip-path: polygon(0 0, 100% 0, 50% 100%);
     }
 

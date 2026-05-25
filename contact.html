@@ -21,7 +21,8 @@ ul{list-style:none}
 button{border:none;background:none;cursor:pointer;font:inherit}
 input,textarea{font:inherit;border:none;outline:none;background:none}
 button,a,input,textarea,select{touch-action:manipulation}
-@media(hover:hover) and (pointer:fine){body{cursor:none}}
+body.custom-cursor-active{cursor:none}
+body.custom-cursor-active a, body.custom-cursor-active button{cursor:none}
 
 /* ─── VARIABLES ───────────────────────────────── */
 :root{
@@ -60,6 +61,7 @@ section{padding:120px 0}
 }
 /* ─── CURSOR ──────────────────────────────────── */
 .cursor{position:fixed;width:8px;height:8px;border-radius:50%;background:var(--charcoal);pointer-events:none;z-index:9999;transform:translate(-50%,-50%);mix-blend-mode:multiply;transition:width .2s,height .2s}
+.cursor{position:fixed;width:8px;height:8px;border-radius:50%;background:var(--charcoal);pointer-events:none;z-index:10000;transform:translate(-50%,-50%);transition:width .2s,height .2s;mix-blend-mode:multiply}
 .cursor-follower{position:fixed;width:36px;height:36px;border-radius:50%;border:1.5px solid rgba(42,39,36,.25);pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .18s var(--ease-out),height .18s var(--ease-out),border-color .18s}
 .cursor.hovered{width:14px;height:14px}
 .cursor-follower.hovered{width:52px;height:52px;border-color:rgba(42,39,36,.12)}
@@ -308,6 +310,7 @@ window.addEventListener('scroll', () => {
 
 // ─── CURSOR ───────────────────────────────────────
 if(canUseCursor.matches) {
+  document.body.classList.add('custom-cursor-active');
   const cur = document.getElementById('cursor');
   const cf  = document.getElementById('cf');
   let mx=0,my=0,fx=0,fy=0;
