@@ -23,8 +23,11 @@ function buildEmailHTML(data) {
       ]
     : [
         ['Name', data.name],
+        ['Email', data.email],
         ['Business', data.business],
         ['WhatsApp', data.whatsapp],
+        ['Instagram', data.instagram],
+        ['Facebook', data.facebook],
         ['Message', data.message],
       ];
 

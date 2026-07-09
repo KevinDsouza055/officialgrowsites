@@ -220,8 +220,11 @@ section{padding:120px 0}
       <div>
         <form class="cform" id="cForm">
           <div class="fg"><label>Your Name</label><input type="text" name="name" placeholder="e.g. Priya Mehta" required /></div>
+          <div class="fg"><label>Email Address</label><input type="email" name="email" placeholder="e.g. priya@example.com" required /></div>
           <div class="fg"><label>Business Name</label><input type="text" name="business" placeholder="e.g. Lumière Boutique" required /></div>
           <div class="fg"><label>WhatsApp Number</label><input type="tel" name="whatsapp" placeholder="e.g. +91 98765 43210" required /></div>
+          <div class="fg"><label>Instagram Handle (optional)</label><input type="text" name="instagram" placeholder="e.g. officialbrand" /></div>
+          <div class="fg"><label>Facebook Page (optional)</label><input type="text" name="facebook" placeholder="e.g. facebook.com/brand" /></div>
           <div class="fg"><label>Your Message</label><textarea name="message" rows="4" placeholder="Tell us about your business and what you need help with…" required></textarea></div>
           <button type="submit" class="btn btn-primary f-submit">
             <span id="fBtnText">Let's Grow Your Business</span>
@@ -357,7 +360,7 @@ document.getElementById('cForm').addEventListener('submit', async e => {
   e.preventDefault();
   clearFormError();
 
-  const inputs = Array.from(e.target.querySelectorAll('input,textarea'));
+  const inputs = Array.from(e.target.querySelectorAll('input[required],textarea[required]'));
   let ok = true;
   inputs.forEach(i => {
     if(!i.value.trim()){
@@ -366,7 +369,7 @@ document.getElementById('cForm').addEventListener('submit', async e => {
       setTimeout(() => i.style.borderColor = '', 2000);
     }
   });
-  if(!ok){ showFormError('Please complete all fields before submitting.'); return; }
+  if(!ok){ showFormError('Please complete all required fields before submitting.'); return; }
 
   const btn = document.getElementById('fBtnText');
   const orig = btn.textContent;
@@ -377,12 +380,15 @@ document.getElementById('cForm').addEventListener('submit', async e => {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        name:      e.target.name.value,
-        business:  e.target.business.value,
-        whatsapp:  e.target.whatsapp.value,
-        message:   e.target.message.value,
-        source:    'contact-form',
-        timestamp: new Date().toISOString()
+        name:       e.target.name.value,
+        email:      e.target.email.value,
+        business:   e.target.business.value,
+        whatsapp:   e.target.whatsapp.value,
+        instagram:  e.target.instagram.value,
+        facebook:   e.target.facebook.value,
+        message:    e.target.message.value,
+        source:     'contact-form',
+        timestamp:  new Date().toISOString()
       })
     });
 
