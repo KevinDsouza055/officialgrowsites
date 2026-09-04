@@ -23,6 +23,19 @@ async function run() {
 
   console.log('\nTest 3: OPTIONS preflight -> expect 200');
   await handler({ method: 'OPTIONS' }, makeRes());
+
+  console.log('\nTest 4: Full valid contact-form payload -> expect 200 only if env vars set');
+  await handler({ method: 'POST', body: JSON.stringify({
+    name: 'Test User',
+    email: 'test@example.com',
+    business: 'TestCo',
+    whatsapp: '+11234567890',
+    instagram: 'testinsta',
+    facebook: 'facebook.com/test',
+    message: 'Hello — this is a test',
+    source: 'contact-form',
+    timestamp: new Date().toISOString()
+  }), headers: { 'content-type': 'application/json' } }, makeRes());
 }
 
 run().catch(err => { console.error('Test harness error:', err); process.exit(1); });
