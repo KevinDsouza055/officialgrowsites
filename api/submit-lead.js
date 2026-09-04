@@ -3,6 +3,11 @@
 // and sends email via Nodemailer (Gmail)
 
 const nodemailer = require('nodemailer');
+// SendGrid is optional — used when SENDGRID_API_KEY is provided
+let sgMail;
+if (process.env.SENDGRID_API_KEY) {
+  try { sgMail = require('@sendgrid/mail'); } catch (e) { console.warn('SendGrid module not installed but SENDGRID_API_KEY present'); }
+}
 
 // ── Email template ───────────────────────────────────────
 function buildEmailHTML(data) {
@@ -87,34 +92,66 @@ module.exports = async function handler(req, res) {
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-  const data = req.body;
+  // Normalize body (some hosts send string bodies)
+  let data = req.body;
+  if (typeof data === 'string') {
+    try {
+      data = JSON.parse(data);
+    } catch (e) {
+      // try parsing URL-encoded form data
+      try {
+        data = Object.fromEntries(new URLSearchParams(data));
+      } catch (e2) {
+        console.error('Failed to parse request body', e, e2);
+        return res.status(400).json({ error: 'Invalid request body' });
+      }
+    }
+  }
 
-  // Basic validation
-  if (!data || (!data.name && !data.email)) {
-    return res.status(400).json({ error: 'Missing required fields' });
+  // Basic validation: contact form requires both name and email
+  if (!data || (data.source === 'contact-form' ? (!data.name || !data.email) : (!data.name && !data.email))) {
+    return res.status(400).json({ error: 'Missing required fields (name and email required for contact form)' });
   }
 
   try {
-    // Create transporter using Gmail App Password
-    const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: process.env.GMAIL_USER,   // e.g. growsites1512@gmail.com
-        pass: process.env.GMAIL_PASS,   // Gmail App Password (16-char)
-      },
-    });
-
     const subject = data.source === 'chatbot'
       ? `🤖 New Chatbot Lead — ${data.name || 'Unknown'} (${data.budget || 'budget TBD'})`
       : `📬 New Contact Form — ${data.name || 'Unknown'} (${data.business || ''})`;
 
-    await transporter.sendMail({
-      from: `"Grow Sites Bot" <${process.env.GMAIL_USER}>`,
-      to: process.env.GMAIL_USER,   // sends to yourself
-      replyTo: data.email || process.env.GMAIL_USER,
-      subject,
-      html: buildEmailHTML(data),
-    });
+    // Prefer SendGrid when API key provided
+    if (process.env.SENDGRID_API_KEY && sgMail) {
+      sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+      const msg = {
+        to: process.env.NOTIFY_EMAIL || process.env.GMAIL_USER,
+        from: process.env.FROM_EMAIL || process.env.NOTIFY_EMAIL || process.env.GMAIL_USER,
+        replyTo: data.email || process.env.GMAIL_USER,
+        subject,
+        html: buildEmailHTML(data),
+      };
+      await sgMail.send(msg);
+    } else {
+      // Fallback to Nodemailer + Gmail
+      if (!process.env.GMAIL_USER || !process.env.GMAIL_PASS) {
+        console.error('Email credentials not configured');
+        return res.status(500).json({ error: 'Email provider not configured', detail: 'No SendGrid key or Gmail credentials set on the server.' });
+      }
+
+      const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: process.env.GMAIL_USER,
+          pass: process.env.GMAIL_PASS,
+        },
+      });
+
+      await transporter.sendMail({
+        from: `"Grow Sites Bot" <${process.env.GMAIL_USER}>`,
+        to: process.env.NOTIFY_EMAIL || process.env.GMAIL_USER,
+        replyTo: data.email || process.env.GMAIL_USER,
+        subject,
+        html: buildEmailHTML(data),
+      });
+    }
 
     return res.status(200).json({ success: true });
   } catch (err) {

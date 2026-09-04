@@ -406,11 +406,46 @@ document.getElementById('cForm').addEventListener('submit', async e => {
 
   } catch(err) {
     console.error('Submission error:', err);
-    showFormError(err.message || 'Submission failed. Please try again.');
+    // Build a mailto fallback so users can manually send if server-side email is down
+    const subject = encodeURIComponent(`Grow Sites contact from ${e.target.name.value || 'Website visitor'}`);
+    const body = encodeURIComponent([
+      `Name: ${e.target.name.value || ''}`,
+      `Email: ${e.target.email.value || ''}`,
+      `Business: ${e.target.business.value || ''}`,
+      `WhatsApp: ${e.target.whatsapp.value || ''}`,
+      `Instagram: ${e.target.instagram.value || ''}`,
+      `Facebook: ${e.target.facebook.value || ''}`,
+      '',
+      `Message:\n${e.target.message.value || ''}`
+    ].join('\n'));
+    const mailto = `mailto:growsites1512@gmail.com?subject=${subject}&body=${body}`;
+
+    showFormError((err.message || 'Submission failed. Please try again.') + ' — or ', mailto);
     btn.textContent = 'Error — Try Again';
     setTimeout(() => btn.textContent = orig, 3000);
   }
 });
+// Enhanced showFormError to optionally include mailto fallback link
+const _origShow = showFormError;
+function showFormError(msg, mailto) {
+  const el = document.getElementById('fError');
+  if(!el) return;
+  if (mailto) {
+    el.innerHTML = '';
+    const text = document.createElement('span');
+    text.textContent = msg;
+    const a = document.createElement('a');
+    a.href = mailto;
+    a.textContent = 'Send via email';
+    a.style.marginLeft = '8px';
+    a.style.fontWeight = '600';
+    el.appendChild(text);
+    el.appendChild(a);
+  } else {
+    el.textContent = msg;
+  }
+  el.classList.add('show');
+}
 </script>
 
 <!-- AI Sales Chatbot — Aria -->
