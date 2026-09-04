@@ -166,11 +166,7 @@ section{padding:120px 0}
 <div class="cursor" id="cursor"></div>
 <div class="cursor-follower" id="cf"></div>
 
-<!-- Float Button -->
-<a href="contact.html#contact" class="float-btn" id="floatBtn">
-  Book a Call
-  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-</a>
+<!-- Float Button removed -->
 
 <!-- ═══ NAVBAR ═══ -->
 <nav class="navbar" id="navbar">
@@ -182,7 +178,7 @@ section{padding:120px 0}
       <li><a href="index.html#why" class="nav-link">Why Us</a></li>
       <li><a href="index.html#process" class="nav-link">Process</a></li>
       <li><a href="projects.html" class="nav-link">Projects</a></li>
-      <li><a href="contact.html#contact" class="nav-link nav-cta">Book a Call</a></li>
+      <li><a href="contact.html#contact" class="nav-link">Contact</a></li>
     </ul>
     <button class="hamburger" id="ham" aria-label="Menu">
       <span></span><span></span><span></span>
@@ -198,7 +194,7 @@ section{padding:120px 0}
     <li><a href="index.html#why" class="mobile-link">Why Us</a></li>
     <li><a href="index.html#process" class="mobile-link">Process</a></li>
     <li><a href="projects.html" class="mobile-link">Projects</a></li>
-    <li><a href="contact.html#contact" class="mobile-link">Book a Call</a></li>
+    <li><a href="contact.html#contact" class="mobile-link">Contact</a></li>
   </ul>
 </div>
 
@@ -315,11 +311,13 @@ mob.addEventListener('touchend', e => {
   if (menuTouchStartY - touchEndY > 50 && mob.classList.contains('open')) setMenuState(false);
 }, { passive: true });
 
-// ─── FLOAT BUTTON ─────────────────────────────────
+// ─── FLOAT BUTTON (removed) ───────────────────────
 const floatBtn = document.getElementById('floatBtn');
-window.addEventListener('scroll', () => {
-  floatBtn.classList.toggle('visible', window.scrollY > 400);
-}, { passive: true });
+if (floatBtn) {
+  window.addEventListener('scroll', () => {
+    floatBtn.classList.toggle('visible', window.scrollY > 400);
+  }, { passive: true });
+}
 
 // ─── CURSOR ───────────────────────────────────────
 if(canUseCursor.matches) {
